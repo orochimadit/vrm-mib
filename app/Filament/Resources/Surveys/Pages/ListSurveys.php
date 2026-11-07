@@ -4,8 +4,8 @@ namespace App\Filament\Resources\Surveys\Pages;
 
 use App\Filament\Resources\Surveys\SurveyResource;
 use Filament\Actions\CreateAction;
-use Filament\Resources\Components\Tab;
 use Filament\Resources\Pages\ListRecords;
+use Filament\Schemas\Components\Tabs\Tab;
 use Illuminate\Database\Eloquent\Builder;
 
 class ListSurveys extends ListRecords
