@@ -7,6 +7,7 @@ use App\Filament\Resources\Surveys\Pages\EditSurvey;
 use App\Filament\Resources\Surveys\Pages\ListSurveys;
 use App\Filament\Resources\Surveys\Schemas\SurveyForm;
 use App\Filament\Resources\Surveys\Tables\SurveysTable;
+use App\Filament\Resources\Surveys\RelationManagers\DefectsRelationManager;
 use App\Models\Survey;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,7 +19,11 @@ class SurveyResource extends Resource
 {
     protected static ?string $model = Survey::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedClipboardDocumentCheck;
+
+    protected static ?string $navigationLabel = 'Survei Kapal';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {
@@ -33,7 +38,7 @@ class SurveyResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            DefectsRelationManager::class,
         ];
     }
 
