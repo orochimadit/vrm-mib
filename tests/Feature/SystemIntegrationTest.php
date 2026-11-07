@@ -181,7 +181,26 @@ class SystemIntegrationTest extends TestCase
     }
 
     /**
-     * 3. INTEGRASI SELURUH 10 MODUL NAVIGASI SIDEBAR SESUAI SCREENSHOT
+     * 3. INTEGRASI LAPORAN LENGKAP & CETAK KONDISI SURVEI (1:1 RESULT.PHP LEGACY)
+     */
+    public function test_survey_condition_report_generation(): void
+    {
+        $this->actingAs($this->admin);
+
+        $survey = Survey::first();
+        $this->assertNotNull($survey, 'Harus ada data survei untuk pengujian laporan');
+
+        $response = $this->get(route('surveys.report', $survey));
+        $response->assertStatus(200);
+        $response->assertSee('PT MIB');
+        $response->assertSee('Condition Survey & Marine Risk Assessment Form');
+        $response->assertSee('Result & Grading Evaluation');
+        $response->assertSee('Resume Vessel Condition From Surveyor');
+        $response->assertSee('List of Deficiencies & Rectification Status');
+    }
+
+    /**
+     * 4. INTEGRASI SELURUH 10 MODUL NAVIGASI SIDEBAR SESUAI SCREENSHOT
      */
     public function test_all_10_sidebar_modules_integration(): void
     {

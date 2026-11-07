@@ -74,6 +74,12 @@ class SurveyForm
                                 ->label('Lokasi / Pelabuhan Inspeksi')
                                 ->placeholder('Contoh: Pelabuhan Tanjung Priok'),
                         ]),
+                        Grid::make(2)->schema([
+                            DatePicker::make('policy_period_start')
+                                ->label('Policy Period Start (Mulai Polis)'),
+                            DatePicker::make('policy_period_end')
+                                ->label('Policy Period End (Akhir Polis)'),
+                        ]),
                     ]),
 
                 Section::make('📁 Upload Dokumen Sertifikat & Foto Bukti Survei')
