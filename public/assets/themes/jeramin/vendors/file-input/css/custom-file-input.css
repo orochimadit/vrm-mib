@@ -1,0 +1,34 @@
+.file-zoom-content {
+	/*min-height: 500px !important;*/
+	height: auto;
+}
+
+.file-zoom-content .is-portrait-gt4 {
+	margin-top: 0px;
+}
+
+.file-preview-image {
+	width: 100% !important;
+	max-width: none;
+}
+
+.file-zoom-dialog .btn-prev {
+	top: -39px !important;
+	left: 25px !important;
+}
+
+.file-zoom-dialog .btn-next {
+	right: inherit;
+	left: 50px !important;
+	top: -39px !important;
+}
+
+.close.fileinput-remove,
+.kv-file-upload {
+	display: none;
+}
+
+.landscape .krajee-default.file-preview-frame .kv-file-content {
+    width: 100%;
+    height: auto;
+}

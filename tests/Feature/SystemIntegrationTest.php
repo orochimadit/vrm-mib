@@ -197,6 +197,21 @@ class SystemIntegrationTest extends TestCase
         $response->assertSee('Result & Grading Evaluation');
         $response->assertSee('Resume Vessel Condition From Surveyor');
         $response->assertSee('List of Deficiencies & Rectification Status');
+
+        // Uji Tampilan Form 1:1 Image 2 (Vessel Survey Form)
+        $responseForm = $this->get(route('surveys.legacy.form', $survey));
+        $responseForm->assertStatus(200);
+        $responseForm->assertSee('Vessel Survey Form');
+        $responseForm->assertSee('Insurance Product');
+        $responseForm->assertSee('Vessel Attributes');
+        $responseForm->assertSee('Person In Charge');
+
+        // Uji Tampilan Result 1:1 Image 1 (Survey Result)
+        $responseResult = $this->get(route('surveys.legacy.result', $survey));
+        $responseResult->assertStatus(200);
+        $responseResult->assertSee('Survey Result');
+        $responseResult->assertSee('GENERAL INFORMATION AND VESSEL\'S DETAIL', false);
+        $responseResult->assertSee('Insurance Review');
     }
 
     /**
