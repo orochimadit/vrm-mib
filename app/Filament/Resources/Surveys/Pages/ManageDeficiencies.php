@@ -55,6 +55,12 @@ class ManageDeficiencies extends ManageRelatedRecords
                 ->button()
                 ->url(SurveyResource::getUrl('index')),
 
+            Action::make('checklist')
+                ->label('← Buka Checklist Lapangan')
+                ->color('info')
+                ->button()
+                ->url(fn (): string => SurveyResource::getUrl('checklist', ['record' => $this->getRecord()])),
+
             Action::make('complete_survey')
                 ->label('✓ Selesaikan Survei (Complete)')
                 ->color('success')

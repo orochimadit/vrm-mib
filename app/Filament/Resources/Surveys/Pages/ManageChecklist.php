@@ -50,6 +50,49 @@ class ManageChecklist extends ManageRelatedRecords
                 ->button()
                 ->url(SurveyResource::getUrl('index')),
 
+            Action::make('download_zip')
+                ->label('Unduh Semua Lampiran (ZIP)')
+                ->icon('heroicon-o-arrow-down-tray')
+                ->color('success')
+                ->button()
+                ->action(function () {
+                    $survey = $this->getRecord();
+                    $zipFileName = "survey-{$survey->id}-attachments.zip";
+                    $zipPath = storage_path("app/public/{$zipFileName}");
+
+                    $zip = new \ZipArchive();
+                    if ($zip->open($zipPath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== true) {
+                        Notification::make()->title('Gagal membuat berkas ZIP')->danger()->send();
+                        return;
+                    }
+
+                    $added = 0;
+                    $survey->loadMissing('responses.attachments');
+                    foreach ($survey->responses as $response) {
+                        foreach ($response->attachments as $att) {
+                            if (!empty($att->file)) {
+                                $filePath = storage_path("app/public/attachments/{$att->file}");
+                                if (file_exists($filePath)) {
+                                    $zip->addFile($filePath, $att->file);
+                                    $added++;
+                                }
+                            }
+                        }
+                    }
+
+                    $zip->close();
+
+                    if ($added === 0) {
+                        if (file_exists($zipPath)) {
+                            unlink($zipPath);
+                        }
+                        Notification::make()->title('Tidak ada berkas lampiran fisik untuk survei ini')->warning()->send();
+                        return;
+                    }
+
+                    return response()->download($zipPath, $zipFileName)->deleteFileAfterSend(true);
+                }),
+
             Action::make('lod')
                 ->label('Buka List of Deficiency →')
                 ->color('danger')
