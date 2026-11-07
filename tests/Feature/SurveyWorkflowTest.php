@@ -100,4 +100,16 @@ class SurveyWorkflowTest extends TestCase
         $responseFiltered = $this->get('/admin/insurance-products?tableFilters[insurance_company_id][value]=8');
         $responseFiltered->assertStatus(200);
     }
+
+    public function test_document_route_handles_existing_and_missing_files(): void
+    {
+        $existing = $this->get('/document/attachment/CLASS_CERTIFICATE.pdf');
+        $existing->assertStatus(200);
+        $this->assertEquals('application/pdf', $existing->headers->get('content-type'));
+
+        // Missing file should return 404 with friendly explanation, NEVER 403 Forbidden
+        $missing = $this->get('/document/attachment/notulensi_05_okt1.pdf');
+        $missing->assertStatus(404);
+        $missing->assertSee('Berkas Fisik Belum Tersedia');
+    }
 }

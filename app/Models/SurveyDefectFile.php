@@ -24,18 +24,27 @@ class SurveyDefectFile extends Model
         return $this->belongsTo(SurveyDefect::class, 'id_deffect', 'id');
     }
 
+    public function getHasPhysicalFileAttribute(): bool
+    {
+        if (empty($this->file)) {
+            return false;
+        }
+
+        return file_exists(storage_path('app/public/attachments/' . $this->file));
+    }
+
     public function getFileUrlAttribute(): ?string
     {
         if ($this->type === 'link') {
             return $this->link;
         }
 
-        if (!empty($this->gdrive_id)) {
-            return "https://drive.google.com/file/d/{$this->gdrive_id}/view";
+        if (!empty($this->file)) {
+            return route('document.attachment', ['filename' => $this->file]);
         }
 
-        if (!empty($this->file)) {
-            return asset('storage/attachment/' . $this->file);
+        if (!empty($this->gdrive_id)) {
+            return "https://drive.google.com/file/d/{$this->gdrive_id}/view";
         }
 
         return null;

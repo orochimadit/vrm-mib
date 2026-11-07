@@ -32,9 +32,10 @@
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 text-left text-xs">
                     <thead class="bg-gray-100 dark:bg-gray-800 font-semibold uppercase text-gray-700 dark:text-gray-300">
                         <tr>
-                            <th class="px-3 py-2">No</th>
+                            <th class="px-3 py-2 w-8">No</th>
                             <th class="px-3 py-2">Judul Dokumen</th>
                             <th class="px-3 py-2">Tipe Berkas</th>
+                            <th class="px-3 py-2">Ketersediaan</th>
                             <th class="px-3 py-2">Nama Berkas</th>
                             <th class="px-3 py-2 text-right">Aksi</th>
                         </tr>
@@ -51,13 +52,44 @@
                                         {{ strtoupper($att->type ?: 'FILE') }}
                                     </span>
                                 </td>
-                                <td class="px-3 py-2.5 text-gray-600 dark:text-gray-400 truncate max-w-xs">
+                                <td class="px-3 py-2.5">
+                                    @if($att->has_physical_file)
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-100 text-emerald-800 dark:bg-emerald-900 dark:text-emerald-200">
+                                            ✓ Ada di Server
+                                        </span>
+                                    @elseif(!empty($att->gdrive_id))
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-indigo-100 text-indigo-800 dark:bg-indigo-900 dark:text-indigo-200">
+                                            ☁ Google Drive
+                                        </span>
+                                    @elseif(!empty($att->link))
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-sky-100 text-sky-800 dark:bg-sky-900 dark:text-sky-200">
+                                            🔗 Tautan Web
+                                        </span>
+                                    @else
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-medium bg-amber-100 text-amber-800 dark:bg-amber-900 dark:text-amber-200">
+                                            ⚠ Arsip Historis
+                                        </span>
+                                    @endif
+                                </td>
+                                <td class="px-3 py-2.5 text-gray-600 dark:text-gray-400 truncate max-w-xs font-mono text-[11px]">
                                     {{ $att->file ?: ($att->link ?: '—') }}
                                 </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    @if($att->file_url)
-                                        <a href="{{ $att->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 rounded shadow-sm">
-                                            Buka Berkas ↗
+                                <td class="px-3 py-2.5 text-right whitespace-nowrap">
+                                    @if($att->has_physical_file)
+                                        <a href="{{ $att->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded shadow-sm">
+                                            Buka Dokumen ↗
+                                        </a>
+                                    @elseif(!empty($att->gdrive_id))
+                                        <a href="{{ $att->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm">
+                                            Buka GDrive ↗
+                                        </a>
+                                    @elseif(!empty($att->link))
+                                        <a href="{{ $att->link }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded shadow-sm">
+                                            Buka Tautan ↗
+                                        </a>
+                                    @elseif($att->file_url)
+                                        <a href="{{ $att->file_url }}" target="_blank" class="inline-flex items-center px-2 py-1 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded border border-amber-300">
+                                            Cek Berkas ↗
                                         </a>
                                     @else
                                         <span class="text-gray-400 italic">Tidak ada tautan</span>

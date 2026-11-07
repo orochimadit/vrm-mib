@@ -58,10 +58,22 @@
                                         ✓ Aktif
                                     </span>
                                 </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    @if($file->file_url)
-                                        <a href="{{ $file->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-medium text-white bg-primary-600 hover:bg-primary-700 rounded shadow-sm">
+                                <td class="px-3 py-2.5 text-right whitespace-nowrap">
+                                    @if($file->has_physical_file)
+                                        <a href="{{ $file->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded shadow-sm">
                                             Buka Berkas ↗
+                                        </a>
+                                    @elseif(!empty($file->gdrive_id))
+                                        <a href="{{ $file->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm">
+                                            Buka GDrive ↗
+                                        </a>
+                                    @elseif(!empty($file->link))
+                                        <a href="{{ $file->link }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded shadow-sm">
+                                            Buka Tautan ↗
+                                        </a>
+                                    @elseif($file->file_url)
+                                        <a href="{{ $file->file_url }}" target="_blank" class="inline-flex items-center px-2 py-1 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded border border-amber-300">
+                                            Cek Berkas ↗
                                         </a>
                                     @else
                                         <span class="text-gray-400 italic">Tidak ada tautan</span>
@@ -130,10 +142,22 @@
                                         ✕ Dihapus / Diarsipkan
                                     </span>
                                 </td>
-                                <td class="px-3 py-2.5 text-right">
-                                    @if($lfile->file_url)
-                                        <a href="{{ $lfile->file_url }}" target="_blank" class="inline-flex items-center px-2 py-0.5 text-xs text-primary-600 hover:text-primary-800 dark:text-primary-400 hover:underline">
-                                            Lihat Arsip ↗
+                                <td class="px-3 py-2.5 text-right whitespace-nowrap">
+                                    @if($lfile->has_physical_file)
+                                        <a href="{{ $lfile->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded shadow-sm">
+                                            Buka Berkas ↗
+                                        </a>
+                                    @elseif(!empty($lfile->file_gdrive_id))
+                                        <a href="{{ $lfile->file_url }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-700 rounded shadow-sm">
+                                            Buka GDrive ↗
+                                        </a>
+                                    @elseif(!empty($lfile->file_link))
+                                        <a href="{{ $lfile->file_link }}" target="_blank" class="inline-flex items-center px-2.5 py-1 text-xs font-semibold text-white bg-sky-600 hover:bg-sky-700 rounded shadow-sm">
+                                            Buka Tautan ↗
+                                        </a>
+                                    @elseif($lfile->file_url)
+                                        <a href="{{ $lfile->file_url }}" target="_blank" class="inline-flex items-center px-2 py-1 text-xs font-medium text-amber-700 bg-amber-50 hover:bg-amber-100 rounded border border-amber-300">
+                                            Cek Arsip ↗
                                         </a>
                                     @else
                                         <span class="text-gray-400 italic">File lama diganti</span>

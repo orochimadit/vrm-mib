@@ -29,18 +29,27 @@ class LogRectificationFile extends Model
         return $this->belongsTo(LogRectification::class, 'id_log_deffect', 'id');
     }
 
+    public function getHasPhysicalFileAttribute(): bool
+    {
+        if (empty($this->file_name)) {
+            return false;
+        }
+
+        return file_exists(storage_path('app/public/attachments/' . $this->file_name));
+    }
+
     public function getFileUrlAttribute(): ?string
     {
         if ($this->file_type === 'link') {
             return $this->file_link;
         }
 
-        if (!empty($this->file_gdrive_id)) {
-            return "https://drive.google.com/file/d/{$this->file_gdrive_id}/view";
+        if (!empty($this->file_name)) {
+            return route('document.attachment', ['filename' => $this->file_name]);
         }
 
-        if (!empty($this->file_name)) {
-            return asset('storage/attachment/' . $this->file_name);
+        if (!empty($this->file_gdrive_id)) {
+            return "https://drive.google.com/file/d/{$this->file_gdrive_id}/view";
         }
 
         return null;
