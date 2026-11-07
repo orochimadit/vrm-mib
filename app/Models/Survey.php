@@ -12,6 +12,7 @@ class Survey extends Model
 
     protected $casts = [
         'inspection_data' => 'array',
+        'attachments' => 'array',
         'date_of_survey' => 'date',
         'due_date' => 'date',
         'policy_period_start' => 'date',
