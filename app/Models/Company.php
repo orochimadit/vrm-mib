@@ -14,6 +14,11 @@ class Company extends Model
         return $this->hasMany(Vessel::class, 'owner_company_id');
     }
 
+    public function vessels(): HasMany
+    {
+        return $this->ownedVessels();
+    }
+
     public function operatedVessels(): HasMany
     {
         return $this->hasMany(Vessel::class, 'operator_company_id');
