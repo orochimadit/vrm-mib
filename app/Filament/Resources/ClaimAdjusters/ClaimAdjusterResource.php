@@ -23,11 +23,13 @@ class ClaimAdjusterResource extends Resource
 
     protected static ?string $navigationLabel = 'Adjusters';
 
+    protected static \UnitEnum|string|null $navigationGroup = 'Insurance';
+
     protected static ?string $modelLabel = 'Adjuster';
 
     protected static ?string $pluralModelLabel = 'Adjusters';
 
-    protected static ?int $navigationSort = 9;
+    protected static ?int $navigationSort = 2;
 
     public static function canViewAny(): bool
     {

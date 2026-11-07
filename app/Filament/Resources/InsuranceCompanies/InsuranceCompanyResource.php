@@ -30,7 +30,7 @@ class InsuranceCompanyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Insurance Company';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 1;
 
     public static function canViewAny(): bool
     {

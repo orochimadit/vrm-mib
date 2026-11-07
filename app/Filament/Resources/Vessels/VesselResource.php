@@ -21,6 +21,8 @@ class VesselResource extends Resource
 {
     protected static ?string $model = Vessel::class;
 
+    protected static bool $shouldRegisterNavigation = false;
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;
 
     protected static ?string $navigationLabel = 'Vessel Data';

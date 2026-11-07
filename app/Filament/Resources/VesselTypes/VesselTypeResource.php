@@ -19,7 +19,7 @@ class VesselTypeResource extends Resource
 {
     protected static ?string $model = VesselType::class;
 
-    protected static bool $shouldRegisterNavigation = false;
+    protected static bool $shouldRegisterNavigation = true;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTag;
 
@@ -29,7 +29,7 @@ class VesselTypeResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Vessel Type';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 9;
 
     public static function canViewAny(): bool
     {

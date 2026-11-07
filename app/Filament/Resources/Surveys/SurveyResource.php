@@ -33,7 +33,7 @@ class SurveyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Vessel Risk Management';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
     public static function form(Schema $schema): Schema
     {

@@ -21,23 +21,23 @@ class ListSurveys extends ListRecords
         ];
     }
 
+    public function getDefaultActiveTab(): string | int | null
+    {
+        return 'self_assessment';
+    }
+
     public function getTabs(): array
     {
         return [
-            'all' => Tab::make('Semua Survei')
-                ->badge(fn () => SurveyResource::getEloquentQuery()->count()),
             'underwriting' => Tab::make('Underwriting')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Underwriting'))
-                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Underwriting')->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Underwriting')),
             'self_assessment' => Tab::make('Self Assessment')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Self Assessment'))
-                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Self Assessment')->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Self Assessment')),
             'photo_album' => Tab::make('Photo Album')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Photo Album'))
-                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Photo Album')->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Photo Album')),
             'survey' => Tab::make('Survey')
-                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Survey'))
-                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Survey')->count()),
+                ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Survey')),
+            'all' => Tab::make('All'),
         ];
     }
 }

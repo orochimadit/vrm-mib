@@ -23,11 +23,13 @@ class ClaimResource extends Resource
 
     protected static ?string $navigationLabel = 'Claim Solution';
 
+    protected static \UnitEnum|string|null $navigationGroup = 'Claim Solution';
+
     protected static ?string $modelLabel = 'Claim Case';
 
     protected static ?string $pluralModelLabel = 'Claim Solution';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 1;
 
     public static function canViewAny(): bool
     {

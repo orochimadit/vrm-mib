@@ -23,11 +23,13 @@ class CasualtyRefResource extends Resource
 
     protected static ?string $navigationLabel = 'Casualty Reference';
 
+    protected static \UnitEnum|string|null $navigationGroup = 'Claim Solution';
+
     protected static ?string $modelLabel = 'Casualty';
 
     protected static ?string $pluralModelLabel = 'Casualty';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 2;
 
     public static function canViewAny(): bool
     {

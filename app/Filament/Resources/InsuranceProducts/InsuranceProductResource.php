@@ -27,7 +27,7 @@ class InsuranceProductResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Product Insurance';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 4;
 
     public static function canViewAny(): bool
     {

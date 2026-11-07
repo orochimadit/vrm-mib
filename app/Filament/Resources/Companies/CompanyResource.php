@@ -27,7 +27,7 @@ class CompanyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Vessel Company Data';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 3;
 
     public static function canViewAny(): bool
     {
