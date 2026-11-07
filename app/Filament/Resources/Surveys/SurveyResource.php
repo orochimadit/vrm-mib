@@ -5,6 +5,8 @@ namespace App\Filament\Resources\Surveys;
 use App\Filament\Resources\Surveys\Pages\CreateSurvey;
 use App\Filament\Resources\Surveys\Pages\EditSurvey;
 use App\Filament\Resources\Surveys\Pages\ListSurveys;
+use App\Filament\Resources\Surveys\Pages\ManageChecklist;
+use App\Filament\Resources\Surveys\Pages\ManageDeficiencies;
 use App\Filament\Resources\Surveys\Schemas\SurveyForm;
 use App\Filament\Resources\Surveys\Tables\SurveysTable;
 use App\Filament\Resources\Surveys\RelationManagers\DefectsRelationManager;
@@ -112,6 +114,8 @@ class SurveyResource extends Resource
             'index' => ListSurveys::route('/'),
             'create' => CreateSurvey::route('/create'),
             'edit' => EditSurvey::route('/{record}/edit'),
+            'checklist' => ManageChecklist::route('/{record}/checklist'),
+            'deficiency' => ManageDeficiencies::route('/{record}/deficiency'),
         ];
     }
 }

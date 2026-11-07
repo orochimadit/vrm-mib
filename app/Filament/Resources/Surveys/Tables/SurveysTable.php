@@ -65,7 +65,7 @@ class SurveysTable
                     ->color('info')
                     ->button()
                     ->size('sm')
-                    ->url(fn (Survey $record): string => SurveyResource::getUrl('edit', ['record' => $record])),
+                    ->url(fn (Survey $record): string => SurveyResource::getUrl('checklist', ['record' => $record])),
                 Action::make('deficiency')
                     ->label('List Of Deficiency')
                     ->icon('heroicon-o-exclamation-triangle')
@@ -73,7 +73,7 @@ class SurveysTable
                     ->button()
                     ->size('sm')
                     ->badge(fn (Survey $record) => $record->defects()->count() ?: null)
-                    ->url(fn (Survey $record): string => SurveyResource::getUrl('edit', ['record' => $record])),
+                    ->url(fn (Survey $record): string => SurveyResource::getUrl('deficiency', ['record' => $record])),
                 EditAction::make()
                     ->label('Edit')
                     ->color('warning')
