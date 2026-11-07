@@ -120,7 +120,7 @@ class SurveysTable
                         Notification::make()->title('Condition Survey berhasil diperbarui')->success()->send();
                     }),
 
-                // 2. SURVEY (Sesuai Legacy btn-primary -> Checklist)
+                // 2. SURVEY (Sesuai Legacy btn-primary -> Checklist Penilaian Lapangan)
                 Action::make('survey')
                     ->label('Survey')
                     ->color('primary')
@@ -128,16 +128,14 @@ class SurveysTable
                     ->size('xs')
                     ->url(fn (Survey $record): string => SurveyResource::getUrl('checklist', ['record' => $record])),
 
-                // 3. RESULT (Sesuai Legacy btn-success -> Hasil Evaluasi)
+                // 3. RESULT (Sesuai Legacy btn-success -> Halaman Evaluasi & Laporan Resmi)
                 Action::make('result')
                     ->label('Result')
                     ->color('success')
                     ->button()
                     ->size('xs')
-                    ->modalHeading('Hasil Evaluasi & Ringkasan Survei')
-                    ->modalSubmitAction(false)
-                    ->modalCancelActionLabel('Tutup')
-                    ->modalContent(fn (Survey $record) => view('filament.modals.survey-result', ['record' => $record])),
+                    ->url(fn (Survey $record): string => route('surveys.report', $record))
+                    ->openUrlInNewTab(true),
 
                 // 4. LIST OF DEFICIENCY (Sesuai Legacy btn-danger)
                 Action::make('deficiency')
