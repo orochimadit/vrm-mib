@@ -15,58 +15,43 @@ class VesselsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('ex_name')
-                    ->searchable(),
+                    ->label('Nama Kapal')
+                    ->weight('bold')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('imo_number')
-                    ->searchable(),
-                TextColumn::make('flag')
-                    ->searchable(),
-                TextColumn::make('vesselType.name')
-                    ->searchable(),
+                    ->label('No. IMO')
+                    ->badge()
+                    ->color('info')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('type_name_legacy')
-                    ->searchable(),
+                    ->label('Tipe Kapal')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('flag')
+                    ->label('Bendera')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('ownerCompany.name')
-                    ->searchable(),
-                TextColumn::make('operatorCompany.name')
-                    ->searchable(),
-                TextColumn::make('classification_society')
-                    ->searchable(),
-                TextColumn::make('class_recommendation_issued')
-                    ->searchable(),
-                TextColumn::make('exemption_certificates_issued')
-                    ->searchable(),
+                    ->label('Pemilik (Owner)')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('year_built')
-                    ->numeric()
+                    ->label('Tahun')
                     ->sortable(),
-                TextColumn::make('place_built')
-                    ->searchable(),
                 TextColumn::make('grt')
+                    ->label('GRT')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('dwt')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('tsi')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('dimensions')
-                    ->searchable(),
-                TextColumn::make('recent_port_of_call')
-                    ->searchable(),
-                TextColumn::make('trading_area')
-                    ->searchable(),
-                TextColumn::make('date_of_last_drydock')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('date_of_next_drydock')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
+                TextColumn::make('classification_society')
+                    ->label('Klasifikasi')
                     ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
+                TextColumn::make('tsi')
+                    ->label('TSI')
+                    ->money('USD')
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -77,7 +62,7 @@ class VesselsTable
             ->recordActions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

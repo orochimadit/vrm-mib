@@ -15,51 +15,59 @@ class SurveysTable
         return $table
             ->columns([
                 TextColumn::make('vessel.name')
-                    ->searchable(),
-                TextColumn::make('surveyor.name')
-                    ->searchable(),
-                TextColumn::make('broker.name')
-                    ->searchable(),
-                TextColumn::make('insuranceCompany.name')
-                    ->searchable(),
-                TextColumn::make('surveyor_name')
+                    ->label('Kapal')
+                    ->weight('bold')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('vessel.imo_number')
+                    ->label('IMO')
+                    ->badge()
+                    ->color('gray')
                     ->searchable(),
                 TextColumn::make('condition_type')
-                    ->searchable(),
+                    ->label('Tipe Survei')
+                    ->badge()
+                    ->color('info')
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('status')
-                    ->searchable(),
+                    ->label('Status')
+                    ->badge()
+                    ->color(fn (?string $state): string => match ($state) {
+                        'Completed' => 'success',
+                        'Outstanding' => 'warning',
+                        'Cancelled' => 'danger',
+                        default => 'gray',
+                    })
+                    ->searchable()
+                    ->sortable(),
                 TextColumn::make('form_status')
-                    ->searchable(),
-                TextColumn::make('location')
+                    ->label('Form')
+                    ->badge()
+                    ->color(fn (?string $state): string => match ($state) {
+                        'complete' => 'success',
+                        default => 'gray',
+                    }),
+                TextColumn::make('surveyor_name')
+                    ->label('Surveyor')
                     ->searchable(),
                 TextColumn::make('date_of_survey')
-                    ->date()
+                    ->label('Tgl Survei')
+                    ->date('d M Y')
                     ->sortable(),
                 TextColumn::make('due_date')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('policy_period_start')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('policy_period_end')
-                    ->date()
-                    ->sortable(),
-                TextColumn::make('risk_score')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('risk_rating')
+                    ->label('Batas Waktu')
+                    ->date('d M Y')
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('location')
+                    ->label('Lokasi')
                     ->searchable(),
-                TextColumn::make('created_by')
-                    ->numeric()
-                    ->sortable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('defects_count')
+                    ->counts('defects')
+                    ->label('Temuan Defect')
+                    ->badge()
+                    ->color('danger'),
             ])
             ->filters([
                 //
@@ -67,7 +75,7 @@ class SurveysTable
             ->recordActions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),

@@ -15,26 +15,25 @@ class CompaniesTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('type')
+                    ->label('Nama Perusahaan')
+                    ->weight('bold')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('owned_vessels_count')
+                    ->counts('ownedVessels')
+                    ->label('Kapal Dimiliki')
+                    ->badge()
+                    ->color('info')
+                    ->sortable(),
+                TextColumn::make('pic')
+                    ->label('PIC')
                     ->searchable(),
                 TextColumn::make('phone')
+                    ->label('Telepon')
                     ->searchable(),
                 TextColumn::make('email')
-                    ->label('Email address')
+                    ->label('Email')
                     ->searchable(),
-                TextColumn::make('website')
-                    ->searchable(),
-                TextColumn::make('pic')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -42,7 +41,7 @@ class CompaniesTable
             ->recordActions([
                 EditAction::make(),
             ])
-            ->toolbarActions([
+            ->bulkActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
