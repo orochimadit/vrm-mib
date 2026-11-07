@@ -8,6 +8,7 @@ use App\Filament\Resources\Surveys\Pages\ListSurveys;
 use App\Filament\Resources\Surveys\Schemas\SurveyForm;
 use App\Filament\Resources\Surveys\Tables\SurveysTable;
 use App\Filament\Resources\Surveys\RelationManagers\DefectsRelationManager;
+use App\Filament\Resources\Surveys\RelationManagers\SurveyResponsesRelationManager;
 use App\Models\Survey;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -45,6 +46,7 @@ class SurveyResource extends Resource
     public static function getRelations(): array
     {
         return [
+            SurveyResponsesRelationManager::class,
             DefectsRelationManager::class,
         ];
     }

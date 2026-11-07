@@ -44,4 +44,9 @@ class Survey extends Model
     {
         return $this->hasMany(SurveyDefect::class);
     }
+
+    public function responses(): HasMany
+    {
+        return $this->hasMany(SurveyResponse::class, 'survey_id', 'id');
+    }
 }
