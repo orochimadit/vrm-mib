@@ -28,7 +28,7 @@ class UserForm
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 Select::make('role')
-                    ->label('Role Akses')
+                    ->label('Level')
                     ->options([
                         'admin_mcm' => 'Admin MCM (Superadmin)',
                         'insurance' => 'Insurance Partner (Underwriter)',
@@ -37,12 +37,33 @@ class UserForm
                         'broker' => 'Insurance Broker',
                     ])
                     ->default('admin_mcm')
+                    ->reactive()
                     ->required(),
+                Select::make('reference_id')
+                    ->label('Admin Reference')
+                    ->options(function ($get) {
+                        $role = $get('role');
+                        return match ($role) {
+                            'insurance' => \App\Models\InsuranceCompany::pluck('name', 'id'),
+                            'surveyor' => \App\Models\Surveyor::pluck('name', 'id'),
+                            'shipowner' => \App\Models\Company::pluck('name', 'id'),
+                            'broker' => \App\Models\Broker::pluck('name', 'id'),
+                            default => [],
+                        };
+                    })
+                    ->searchable()
+                    ->visible(fn ($get) => in_array($get('role'), ['insurance', 'surveyor', 'shipowner', 'broker'])),
                 TextInput::make('password')
                     ->label('Password')
                     ->password()
                     ->dehydrated(fn ($state) => filled($state))
                     ->required(fn (string $operation): bool => $operation === 'create'),
+                TextInput::make('password_confirmation')
+                    ->label('Konfirmasi Password')
+                    ->password()
+                    ->same('password')
+                    ->dehydrated(false)
+                    ->visible(fn (string $operation): bool => $operation === 'create'),
                 Toggle::make('is_active')
                     ->label('Akun Aktif')
                     ->default(true)

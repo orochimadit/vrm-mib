@@ -71,4 +71,29 @@ class SurveyWorkflowTest extends TestCase
         $html = view('filament.modals.defect-log-files', ['record' => $defectWithArchivedFiles])->render();
         $this->assertStringContainsString('Dihapus / Diarsipkan', $html);
     }
+
+    public function test_admin_can_access_all_legacy_cloned_admin_pages(): void
+    {
+        $admin = User::where('role', 'admin_mcm')->first();
+        $this->actingAs($admin);
+
+        $routes = [
+            '/admin/services',
+            '/admin/claims',
+            '/admin/casualty-refs',
+            '/admin/companies',
+            '/admin/vessels',
+            '/admin/insurance-products',
+            '/admin/surveyors',
+            '/admin/claim-adjusters',
+            '/admin/insurance-companies',
+            '/admin/brokers',
+            '/admin/users',
+        ];
+
+        foreach ($routes as $route) {
+            $response = $this->get($route);
+            $response->assertStatus(200, "Route {$route} failed with status " . $response->getStatusCode());
+        }
+    }
 }

@@ -14,12 +14,15 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Auth;
+use UnitEnum;
 
 class InsuranceCompanyResource extends Resource
 {
     protected static ?string $model = InsuranceCompany::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedBuildingOffice;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedComputerDesktop;
+
+    protected static UnitEnum|string|null $navigationGroup = 'Insurance';
 
     protected static ?string $navigationLabel = 'Insurance Company';
 
@@ -27,7 +30,7 @@ class InsuranceCompanyResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Insurance Company';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 8;
 
     public static function canViewAny(): bool
     {

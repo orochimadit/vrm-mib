@@ -15,38 +15,36 @@ class VesselForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Name')
                     ->required(),
-                TextInput::make('ex_name'),
-                TextInput::make('imo_number'),
-                TextInput::make('flag'),
                 Select::make('vessel_type_id')
-                    ->relationship('vesselType', 'name'),
-                TextInput::make('type_name_legacy'),
+                    ->label('Type')
+                    ->placeholder('Select Vessel Type')
+                    ->relationship('vesselType', 'name')
+                    ->searchable()
+                    ->preload(),
                 Select::make('owner_company_id')
-                    ->relationship('ownerCompany', 'name'),
-                Select::make('operator_company_id')
-                    ->relationship('operatorCompany', 'name'),
-                TextInput::make('classification_society'),
-                TextInput::make('class_recommendation_issued'),
-                TextInput::make('exemption_certificates_issued'),
+                    ->label('Company')
+                    ->placeholder('::Select Company::')
+                    ->relationship('ownerCompany', 'name')
+                    ->searchable()
+                    ->preload(),
                 TextInput::make('year_built')
-                    ->numeric(),
-                TextInput::make('place_built'),
-                TextInput::make('grt')
-                    ->numeric(),
-                TextInput::make('dwt')
+                    ->label('Year Built')
                     ->numeric(),
                 TextInput::make('tsi')
-                    ->required()
+                    ->label('Total Sum Insured (USD)')
                     ->numeric()
                     ->default(0),
-                TextInput::make('dimensions'),
-                Textarea::make('recent_cargoes_carried')
-                    ->columnSpanFull(),
-                TextInput::make('recent_port_of_call'),
-                TextInput::make('trading_area'),
-                DatePicker::make('date_of_last_drydock'),
-                DatePicker::make('date_of_next_drydock'),
+                TextInput::make('grt')
+                    ->label('GRT')
+                    ->numeric(),
+                TextInput::make('imo_number')
+                    ->label('IMO Number'),
+                TextInput::make('flag')
+                    ->label('Flag'),
+                TextInput::make('classification_society')
+                    ->label('Classification Society'),
             ]);
     }
 }

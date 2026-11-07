@@ -3,9 +3,11 @@
 namespace App\Filament\Resources\Vessels\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 
 class VesselsTable
@@ -15,57 +17,55 @@ class VesselsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->label('Nama Kapal')
+                    ->label('Vessel Name')
                     ->weight('bold')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('imo_number')
-                    ->label('No. IMO')
-                    ->badge()
-                    ->color('info')
-                    ->searchable()
-                    ->sortable(),
                 TextColumn::make('type_name_legacy')
-                    ->label('Tipe Kapal')
+                    ->label('Type')
                     ->searchable()
-                    ->sortable(),
-                TextColumn::make('flag')
-                    ->label('Bendera')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('ownerCompany.name')
-                    ->label('Pemilik (Owner)')
-                    ->searchable()
-                    ->sortable(),
-                TextColumn::make('year_built')
-                    ->label('Tahun')
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('-'),
                 TextColumn::make('grt')
                     ->label('GRT')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('classification_society')
-                    ->label('Klasifikasi')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->sortable()
+                    ->placeholder('-'),
                 TextColumn::make('tsi')
                     ->label('TSI')
-                    ->money('USD')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->dateTime()
+                    ->numeric(2)
                     ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->placeholder('-'),
+                TextColumn::make('ownerCompany.name')
+                    ->label('Company Name')
+                    ->searchable()
+                    ->sortable()
+                    ->placeholder('-'),
             ])
             ->filters([
-                //
+                SelectFilter::make('owner_company_id')
+                    ->label('Filter Perusahaan Pemilik')
+                    ->relationship('ownerCompany', 'name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->color('warning')
+                    ->button()
+                    ->size('sm'),
+                DeleteAction::make()
+                    ->label('Delete')
+                    ->color('danger')
+                    ->button()
+                    ->size('sm'),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
             ]);
     }
 }
+

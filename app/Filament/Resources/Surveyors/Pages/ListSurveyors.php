@@ -13,7 +13,9 @@ class ListSurveyors extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Add New Surveyor')
+                ->color('primary'),
         ];
     }
 }

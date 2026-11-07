@@ -13,22 +13,22 @@ class CompanyForm
         return $schema
             ->components([
                 TextInput::make('name')
+                    ->label('Company Name')
                     ->required(),
-                TextInput::make('type')
-                    ->required()
-                    ->default('owner'),
-                Textarea::make('contact_info')
-                    ->columnSpanFull(),
-                Textarea::make('address')
-                    ->columnSpanFull(),
+                TextInput::make('pic')
+                    ->label('PIC'),
                 TextInput::make('phone')
+                    ->label('Phone')
                     ->tel(),
                 TextInput::make('email')
-                    ->label('Email address')
+                    ->label('Email')
                     ->email(),
+                Textarea::make('address')
+                    ->label('Address')
+                    ->columnSpanFull(),
                 TextInput::make('website')
+                    ->label('Website')
                     ->url(),
-                TextInput::make('pic'),
             ]);
     }
 }

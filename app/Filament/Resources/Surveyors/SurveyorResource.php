@@ -25,9 +25,9 @@ class SurveyorResource extends Resource
 
     protected static ?string $modelLabel = 'Surveyor Company';
 
-    protected static ?string $pluralModelLabel = 'Surveyor Company';
+    protected static ?string $pluralModelLabel = 'Surveyors';
 
-    protected static ?int $navigationSort = 3;
+    protected static ?int $navigationSort = 8;
 
     public static function canViewAny(): bool
     {

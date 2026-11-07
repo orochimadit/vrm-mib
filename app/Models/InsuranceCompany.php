@@ -13,4 +13,9 @@ class InsuranceCompany extends Model
     {
         return $this->hasMany(Survey::class);
     }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(InsuranceProduct::class);
+    }
 }

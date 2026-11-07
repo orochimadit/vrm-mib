@@ -21,13 +21,13 @@ class BrokerResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
 
-    protected static ?string $navigationLabel = 'Broker / Partners';
+    protected static ?string $navigationLabel = 'Broker/Partners';
 
-    protected static ?string $modelLabel = 'Broker / Partner';
+    protected static ?string $modelLabel = 'Broker/Partners Company';
 
-    protected static ?string $pluralModelLabel = 'Broker / Partners';
+    protected static ?string $pluralModelLabel = 'Broker/Partners Company';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 11;
 
     public static function canViewAny(): bool
     {

@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\InsuranceCompanies\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -15,28 +16,42 @@ class InsuranceCompaniesTable
         return $table
             ->columns([
                 TextColumn::make('name')
+                    ->label('Name')
+                    ->weight('semibold')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('address')
+                    ->label('Address')
+                    ->limit(35)
+                    ->wrap()
                     ->searchable(),
                 TextColumn::make('phone')
-                    ->searchable(),
+                    ->label('Phone')
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
+                    ->label('Email')
+                    ->searchable()
+                    ->placeholder('-'),
                 TextColumn::make('website')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Website')
+                    ->searchable()
+                    ->placeholder('-'),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->color('info')
+                    ->button()
+                    ->size('sm'),
+                DeleteAction::make()
+                    ->label('Delete')
+                    ->color('danger')
+                    ->button()
+                    ->size('sm'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -45,3 +60,4 @@ class InsuranceCompaniesTable
             ]);
     }
 }
+

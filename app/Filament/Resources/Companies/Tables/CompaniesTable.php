@@ -2,7 +2,11 @@
 
 namespace App\Filament\Resources\Companies\Tables;
 
+use App\Filament\Resources\Vessels\VesselResource;
+use App\Models\Company;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -14,37 +18,53 @@ class CompaniesTable
     {
         return $table
             ->columns([
+                TextColumn::make('index')
+                    ->label('No')
+                    ->rowIndex(),
                 TextColumn::make('name')
-                    ->label('Nama Perusahaan')
-                    ->weight('bold')
+                    ->label('Company Name')
+                    ->weight('semibold')
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('owned_vessels_count')
-                    ->counts('ownedVessels')
-                    ->label('Kapal Dimiliki')
-                    ->badge()
-                    ->color('info')
-                    ->sortable(),
+                TextColumn::make('contact_info')
+                    ->label('Contact Info')
+                    ->state(fn (Company $record) => $record->email ?: ($record->phone ?: '-'))
+                    ->searchable(['email', 'phone']),
                 TextColumn::make('pic')
                     ->label('PIC')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->label('Telepon')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email')
-                    ->searchable(),
+                    ->searchable()
+                    ->placeholder('-'),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                Action::make('vessel')
+                    ->label('Vessel')
+                    ->color('info')
+                    ->button()
+                    ->size('sm')
+                    ->url(fn (Company $record): string => VesselResource::getUrl('index', [
+                        'tableFilters' => [
+                            'owner_company_id' => ['value' => $record->id],
+                        ],
+                    ])),
+                EditAction::make()
+                    ->label('Edit')
+                    ->color('warning')
+                    ->button()
+                    ->size('sm'),
+                DeleteAction::make()
+                    ->label('Delete')
+                    ->color('danger')
+                    ->button()
+                    ->size('sm'),
             ])
-            ->bulkActions([
+            ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),
                 ]),
             ]);
     }
 }
+

@@ -13,7 +13,9 @@ class ListVessels extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            CreateAction::make()
+                ->label('Add Vessel')
+                ->color('primary'),
         ];
     }
 }

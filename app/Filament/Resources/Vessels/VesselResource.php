@@ -23,13 +23,13 @@ class VesselResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;
 
-    protected static ?string $navigationLabel = 'Vessel & Owner Company';
+    protected static ?string $navigationLabel = 'Vessel Data';
 
-    protected static ?string $modelLabel = 'Armada Kapal';
+    protected static ?string $modelLabel = 'Vessel';
 
-    protected static ?string $pluralModelLabel = 'Vessel & Owner Company';
+    protected static ?string $pluralModelLabel = 'Vessel Data';
 
-    protected static ?int $navigationSort = 2;
+    protected static ?int $navigationSort = 6;
 
     public static function form(Schema $schema): Schema
     {

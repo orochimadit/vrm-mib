@@ -23,11 +23,11 @@ class UserResource extends Resource
 
     protected static ?string $navigationLabel = 'Management Administrator';
 
-    protected static ?string $modelLabel = 'Pengguna / Administrator';
+    protected static ?string $modelLabel = 'Administrator';
 
-    protected static ?string $pluralModelLabel = 'Management Administrator';
+    protected static ?string $pluralModelLabel = 'Manajemen Admin';
 
-    protected static ?int $navigationSort = 7;
+    protected static ?int $navigationSort = 12;
 
     public static function canViewAny(): bool
     {

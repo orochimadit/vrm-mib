@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Surveyors\Tables;
 
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -15,28 +16,29 @@ class SurveyorsTable
         return $table
             ->columns([
                 TextColumn::make('name')
-                    ->searchable(),
-                TextColumn::make('phone')
-                    ->searchable(),
-                TextColumn::make('email')
-                    ->label('Email address')
-                    ->searchable(),
-                TextColumn::make('user.name')
-                    ->searchable(),
-                TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->label('Name')
+                    ->weight('semibold')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('contact_info')
+                    ->label('Contact Info')
+                    ->state(fn ($record) => $record->email ?: ($record->phone ?: '-'))
+                    ->searchable(['email', 'phone']),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                EditAction::make()
+                    ->label('Edit')
+                    ->color('info')
+                    ->button()
+                    ->size('sm'),
+                DeleteAction::make()
+                    ->label('Delete')
+                    ->color('danger')
+                    ->button()
+                    ->size('sm'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -45,3 +47,4 @@ class SurveyorsTable
             ]);
     }
 }
+
