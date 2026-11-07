@@ -2,6 +2,9 @@
 
 namespace App\Filament\Resources\Surveys\Tables;
 
+use App\Filament\Resources\Surveys\SurveyResource;
+use App\Models\Survey;
+use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -15,8 +18,9 @@ class SurveysTable
         return $table
             ->columns([
                 TextColumn::make('vessel.name')
-                    ->label('Kapal')
+                    ->label('Vessel Name')
                     ->weight('bold')
+                    ->description(fn (Survey $record): string => $record->vessel?->ownerCompany?->name ? "Owner: {$record->vessel->ownerCompany->name}" : '')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('vessel.imo_number')
@@ -24,56 +28,57 @@ class SurveysTable
                     ->badge()
                     ->color('gray')
                     ->searchable(),
-                TextColumn::make('condition_type')
-                    ->label('Tipe Survei')
-                    ->badge()
-                    ->color('info')
+                TextColumn::make('insuranceCompany.name')
+                    ->label('Insurance')
                     ->searchable()
+                    ->sortable(),
+                TextColumn::make('surveyor_name')
+                    ->label('Surveyor Name')
+                    ->default(fn (Survey $record): string => $record->surveyor?->name ?? '—')
+                    ->searchable(),
+                TextColumn::make('location')
+                    ->label('Location of Survey')
+                    ->searchable(),
+                TextColumn::make('due_date')
+                    ->label('Due Date')
+                    ->date('d-M-Y')
                     ->sortable(),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()
                     ->color(fn (?string $state): string => match ($state) {
                         'Completed' => 'success',
-                        'Outstanding' => 'warning',
-                        'Cancelled' => 'danger',
-                        default => 'gray',
+                        'Outstanding' => 'danger',
+                        'Cancelled' => 'dark',
+                        default => 'secondary',
                     })
                     ->searchable()
                     ->sortable(),
-                TextColumn::make('form_status')
-                    ->label('Form')
-                    ->badge()
-                    ->color(fn (?string $state): string => match ($state) {
-                        'complete' => 'success',
-                        default => 'gray',
-                    }),
-                TextColumn::make('surveyor_name')
-                    ->label('Surveyor')
-                    ->searchable(),
-                TextColumn::make('date_of_survey')
-                    ->label('Tgl Survei')
-                    ->date('d M Y')
-                    ->sortable(),
-                TextColumn::make('due_date')
-                    ->label('Batas Waktu')
-                    ->date('d M Y')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('location')
-                    ->label('Lokasi')
-                    ->searchable(),
-                TextColumn::make('defects_count')
-                    ->counts('defects')
-                    ->label('Temuan Defect')
-                    ->badge()
-                    ->color('danger'),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
+                Action::make('survey')
+                    ->label('Survey')
+                    ->icon('heroicon-o-clipboard-document-check')
+                    ->color('info')
+                    ->button()
+                    ->size('sm')
+                    ->url(fn (Survey $record): string => SurveyResource::getUrl('edit', ['record' => $record])),
+                Action::make('deficiency')
+                    ->label('List Of Deficiency')
+                    ->icon('heroicon-o-exclamation-triangle')
+                    ->color('danger')
+                    ->button()
+                    ->size('sm')
+                    ->badge(fn (Survey $record) => $record->defects()->count() ?: null)
+                    ->url(fn (Survey $record): string => SurveyResource::getUrl('edit', ['record' => $record])),
+                EditAction::make()
+                    ->label('Edit')
+                    ->color('warning')
+                    ->button()
+                    ->size('sm'),
             ])
             ->bulkActions([
                 BulkActionGroup::make([

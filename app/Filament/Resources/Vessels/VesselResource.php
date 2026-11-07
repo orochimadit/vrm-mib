@@ -18,7 +18,15 @@ class VesselResource extends Resource
 {
     protected static ?string $model = Vessel::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedSparkles;
+
+    protected static ?string $navigationLabel = 'Vessel & Owner Company';
+
+    protected static ?string $modelLabel = 'Armada Kapal';
+
+    protected static ?string $pluralModelLabel = 'Vessel & Owner Company';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

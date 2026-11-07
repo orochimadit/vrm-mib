@@ -18,7 +18,15 @@ class BrokerResource extends Resource
 {
     protected static ?string $model = Broker::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+
+    protected static ?string $navigationLabel = 'Broker / Partners';
+
+    protected static ?string $modelLabel = 'Broker / Partner';
+
+    protected static ?string $pluralModelLabel = 'Broker / Partners';
+
+    protected static ?int $navigationSort = 5;
 
     public static function form(Schema $schema): Schema
     {

@@ -18,7 +18,15 @@ class SurveyorResource extends Resource
 {
     protected static ?string $model = Surveyor::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
+
+    protected static ?string $navigationLabel = 'Surveyor Company';
+
+    protected static ?string $modelLabel = 'Surveyor Company';
+
+    protected static ?string $pluralModelLabel = 'Surveyor Company';
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {

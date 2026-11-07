@@ -18,6 +18,8 @@ class SurveyDefectResource extends Resource
 {
     protected static ?string $model = SurveyDefect::class;
 
+    protected static bool $shouldRegisterNavigation = false; // Hidden from sidebar, accessed directly via Survey rows!
+
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedExclamationTriangle;
 
     protected static ?string $navigationLabel = 'Temuan Kerusakan (Defects)';
