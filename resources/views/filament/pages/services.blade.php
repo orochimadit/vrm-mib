@@ -3,7 +3,7 @@
         {{-- LOGO VRM --}}
         <div class="mb-8 flex flex-col items-center">
             <div class="flex items-center gap-3">
-                <svg class="w-14 h-14 text-[#0066cc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <svg width="56" height="56" style="width: 56px; height: 56px; min-width: 56px; max-width: 56px; display: block;" class="text-[#0066cc]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <circle cx="12" cy="12" r="9"/>
                     <circle cx="12" cy="12" r="3"/>
                     <path d="M12 3v6m0 6v6M3 12h6m6 0h6"/>

@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\Claims\Pages;
 
 use App\Filament\Resources\Claims\ClaimResource;
-use App\Filament\Widgets\ClaimPortfolioCardsWidget;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -19,11 +18,5 @@ class ListClaims extends ListRecords
                 ->color('success'),
         ];
     }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            ClaimPortfolioCardsWidget::class,
-        ];
-    }
 }
+

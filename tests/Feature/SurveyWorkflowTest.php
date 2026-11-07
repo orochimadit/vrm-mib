@@ -95,5 +95,9 @@ class SurveyWorkflowTest extends TestCase
             $response = $this->get($route);
             $response->assertStatus(200, "Route {$route} failed with status " . $response->getStatusCode());
         }
+
+        // Test filtered insurance product page specifically
+        $responseFiltered = $this->get('/admin/insurance-products?tableFilters[insurance_company_id][value]=8');
+        $responseFiltered->assertStatus(200);
     }
 }

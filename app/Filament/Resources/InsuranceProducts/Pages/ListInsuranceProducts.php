@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\InsuranceProducts\Pages;
 
 use App\Filament\Resources\InsuranceProducts\InsuranceProductResource;
-use App\Filament\Widgets\InsuranceCompanyCardsWidget;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -19,11 +18,5 @@ class ListInsuranceProducts extends ListRecords
                 ->color('primary'),
         ];
     }
-
-    protected function getHeaderWidgets(): array
-    {
-        return [
-            InsuranceCompanyCardsWidget::class,
-        ];
-    }
 }
+

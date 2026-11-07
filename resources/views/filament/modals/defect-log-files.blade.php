@@ -19,7 +19,7 @@
     <div>
         <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-2 flex items-center justify-between">
             <span class="flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg width="16" height="16" style="width: 16px; height: 16px; min-width: 16px; display: inline-block;" class="text-emerald-600 dark:text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 Berkas Bukti Aktif (Saat Ini)
             </span>
             <span class="text-xs font-normal text-gray-500">{{ $activeFiles->count() }} file aktif</span>
@@ -79,7 +79,7 @@
     <div class="pt-2 border-t border-gray-200 dark:border-gray-700">
         <div class="flex items-center justify-between mb-2">
             <h4 class="font-semibold text-gray-800 dark:text-gray-200 flex items-center gap-1.5">
-                <svg class="w-4 h-4 text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <svg width="16" height="16" style="width: 16px; height: 16px; min-width: 16px; display: inline-block;" class="text-amber-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 Log Dokumen yang Dihapus / Diarsipkan oleh Ship Owner
             </h4>
             @if($logFiles->isNotEmpty())
