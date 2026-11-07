@@ -39,6 +39,6 @@ class SurveyDefect extends Model
             'id_log_deffect',
             'id',
             'id'
-        )->orderByDesc('datetime');
+        )->orderByDesc('log_rectification_file.datetime');
     }
 }

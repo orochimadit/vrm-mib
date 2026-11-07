@@ -114,15 +114,18 @@ class DefectsRelationManager extends RelationManager
                     ->visible(fn () => in_array(Auth::user()?->role, ['admin_mcm', 'surveyor'])),
             ])
             ->recordActions([
-                // 1. TOMBOL LOG DOKUMEN / RIWAYAT FILE (termasuk yang telah dihapus/diarsip)
+                // 1. TOMBOL LOG DOKUMEN / RIWAYAT FILE (Termasuk Log Dokumen yang Dihapus/Diarsipkan oleh Shipowner)
                 Action::make('log_files')
                     ->label('Log Dokumen')
                     ->icon('heroicon-o-document-magnifying-glass')
-                    ->color('gray')
+                    ->color(fn (SurveyDefect $record) => $record->logRectificationFiles()->exists() ? 'warning' : 'gray')
                     ->button()
                     ->size('xs')
-                    ->modalHeading('Riwayat Dokumen Bukti Perbaikan')
-                    ->modalDescription('Daftar seluruh berkas bukti fisik (PDF/Foto) dan link video perbaikan, termasuk riwayat dokumen yang sudah diganti atau diarsipkan.')
+                    ->badge(fn (SurveyDefect $record) => $record->logRectificationFiles()->count() ?: null)
+                    ->badgeColor('warning')
+                    ->tooltip('Lihat riwayat dokumen aktif dan rekaman berkas yang dihapus/diarsipkan oleh Shipowner')
+                    ->modalHeading('Riwayat Dokumen Bukti Perbaikan & Log File Diarsipkan')
+                    ->modalDescription('Daftar berkas bukti aktif serta log audit dokumen yang pernah diunggah lalu diganti/dihapus oleh Ship Owner saat revisi.')
                     ->modalSubmitAction(false)
                     ->modalCancelActionLabel('Tutup')
                     ->modalContent(fn (SurveyDefect $record) => view('filament.modals.defect-log-files', ['record' => $record])),

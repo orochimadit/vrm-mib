@@ -61,4 +61,14 @@ class SurveyWorkflowTest extends TestCase
         $this->actingAs($user);
         $this->get('/admin/surveys')->assertStatus(200);
     }
+
+    public function test_log_rectification_files_relation_and_modal(): void
+    {
+        $defectWithArchivedFiles = \App\Models\SurveyDefect::whereHas('logRectificationFiles')->first();
+        $this->assertNotNull($defectWithArchivedFiles, 'Defect with logRectificationFiles should exist');
+        $this->assertGreaterThan(0, $defectWithArchivedFiles->logRectificationFiles()->count());
+
+        $html = view('filament.modals.defect-log-files', ['record' => $defectWithArchivedFiles])->render();
+        $this->assertStringContainsString('Dihapus / Diarsipkan', $html);
+    }
 }
