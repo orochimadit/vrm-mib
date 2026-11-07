@@ -15,7 +15,9 @@ class ListSurveys extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label('+ Buat Penugasan Survei Baru'),
+            CreateAction::make()
+                ->label('+ Buat Penugasan Survei Baru')
+                ->visible(fn () => SurveyResource::canCreate()),
         ];
     }
 
@@ -23,19 +25,19 @@ class ListSurveys extends ListRecords
     {
         return [
             'all' => Tab::make('Semua Survei')
-                ->badge(fn () => \App\Models\Survey::count()),
+                ->badge(fn () => SurveyResource::getEloquentQuery()->count()),
             'underwriting' => Tab::make('Underwriting')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Underwriting'))
-                ->badge(fn () => \App\Models\Survey::where('condition_type', 'Underwriting')->count()),
+                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Underwriting')->count()),
             'self_assessment' => Tab::make('Self Assessment')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Self Assessment'))
-                ->badge(fn () => \App\Models\Survey::where('condition_type', 'Self Assessment')->count()),
+                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Self Assessment')->count()),
             'photo_album' => Tab::make('Photo Album')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Photo Album'))
-                ->badge(fn () => \App\Models\Survey::where('condition_type', 'Photo Album')->count()),
+                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Photo Album')->count()),
             'survey' => Tab::make('Survey')
                 ->modifyQueryUsing(fn (Builder $query) => $query->where('condition_type', 'Survey'))
-                ->badge(fn () => \App\Models\Survey::where('condition_type', 'Survey')->count()),
+                ->badge(fn () => SurveyResource::getEloquentQuery()->where('condition_type', 'Survey')->count()),
         ];
     }
 }

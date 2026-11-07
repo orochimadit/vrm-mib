@@ -13,6 +13,9 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class VesselResource extends Resource
 {
@@ -36,6 +39,54 @@ class VesselResource extends Resource
     public static function table(Table $table): Table
     {
         return VesselsTable::configure($table);
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = Auth::user();
+
+        if (! $user) {
+            return $query;
+        }
+
+        if ($user->role === 'admin_mcm') {
+            return $query;
+        }
+
+        if ($user->role === 'shipowner' && $user->reference_id) {
+            return $query->where('owner_company_id', $user->reference_id);
+        }
+
+        if ($user->role === 'surveyor' && $user->reference_id) {
+            return $query->whereHas('surveys', fn ($q) => $q->where('surveyor_id', $user->reference_id));
+        }
+
+        if ($user->role === 'insurance' && $user->reference_id) {
+            return $query->whereHas('surveys', fn ($q) => $q->where('insurance_company_id', $user->reference_id));
+        }
+
+        if ($user->role === 'broker' && $user->reference_id) {
+            return $query->whereHas('surveys', fn ($q) => $q->where('broker_id', $user->reference_id));
+        }
+
+        return $query;
+    }
+
+    public static function canViewAny(): bool
+    {
+        $role = Auth::user()?->role;
+        return in_array($role, ['admin_mcm', 'shipowner']);
+    }
+
+    public static function canCreate(): bool
+    {
+        return Auth::user()?->role === 'admin_mcm';
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return Auth::user()?->role === 'admin_mcm';
     }
 
     public static function getRelations(): array

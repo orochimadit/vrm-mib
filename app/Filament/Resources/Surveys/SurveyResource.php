@@ -14,6 +14,9 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class SurveyResource extends Resource
 {
@@ -44,6 +47,61 @@ class SurveyResource extends Resource
         return [
             DefectsRelationManager::class,
         ];
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+        $user = Auth::user();
+
+        if (! $user) {
+            return $query;
+        }
+
+        // 1. ADMIN MCM (Superadmin): Melihat semua data survei
+        if ($user->role === 'admin_mcm') {
+            return $query;
+        }
+
+        // 2. INSURANCE (Underwriter): Hanya melihat survei asuransi perusahaannya
+        if ($user->role === 'insurance' && $user->reference_id) {
+            return $query->where('insurance_company_id', $user->reference_id);
+        }
+
+        // 3. SURVEYOR: Hanya melihat survei yang ditugaskan ke lembaga survey-nya
+        if ($user->role === 'surveyor' && $user->reference_id) {
+            return $query->where('surveyor_id', $user->reference_id);
+        }
+
+        // 4. SHIPOWNER: Hanya melihat survei kapal miliknya
+        if ($user->role === 'shipowner' && $user->reference_id) {
+            return $query->whereHas('vessel', function (Builder $q) use ($user) {
+                $q->where('owner_company_id', $user->reference_id);
+            });
+        }
+
+        // 5. BROKER: Hanya melihat survei melalui broker perusahaannya
+        if ($user->role === 'broker' && $user->reference_id) {
+            return $query->where('broker_id', $user->reference_id);
+        }
+
+        return $query;
+    }
+
+    public static function canCreate(): bool
+    {
+        $role = Auth::user()?->role;
+        return in_array($role, ['admin_mcm', 'surveyor']);
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return Auth::user()?->role === 'admin_mcm';
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return Auth::user()?->role === 'admin_mcm';
     }
 
     public static function getPages(): array

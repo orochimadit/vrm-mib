@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Auth;
 
 class InsuranceCompanyResource extends Resource
 {
@@ -27,6 +28,11 @@ class InsuranceCompanyResource extends Resource
     protected static ?string $pluralModelLabel = 'Insurance Company';
 
     protected static ?int $navigationSort = 4;
+
+    public static function canViewAny(): bool
+    {
+        return Auth::user()?->role === 'admin_mcm';
+    }
 
     public static function form(Schema $schema): Schema
     {
