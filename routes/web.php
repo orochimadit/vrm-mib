@@ -15,6 +15,14 @@ Route::get('/surveys/{survey}/report', [SurveyReportController::class, 'show'])
     ->name('surveys.report');
 
 // Dedicated Legacy 1:1 Jeramin Admin Views for Form & Result
+Route::get('/admin/services', [LegacySurveyViewController::class, 'servicesHub'])
+    ->name('services.legacy.hub');
+Route::get('/admin/surveys', [LegacySurveyViewController::class, 'companiesHub'])
+    ->name('surveys.legacy.hub');
+Route::match(['get', 'post'], '/admin/surveys/years', [LegacySurveyViewController::class, 'getYears'])
+    ->name('surveys.legacy.years');
+Route::get('/admin/surveys/data/{companyId?}/{year?}', [LegacySurveyViewController::class, 'data'])
+    ->name('surveys.legacy.data');
 Route::get('/admin/surveys/{survey}/form', [LegacySurveyViewController::class, 'showForm'])
     ->name('surveys.legacy.form');
 Route::post('/admin/surveys/{survey}/form', [LegacySurveyViewController::class, 'updateForm'])

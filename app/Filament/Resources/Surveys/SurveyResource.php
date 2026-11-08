@@ -35,6 +35,11 @@ class SurveyResource extends Resource
 
     protected static ?int $navigationSort = 6;
 
+    public static function getNavigationUrl(): string
+    {
+        return route('surveys.legacy.hub');
+    }
+
     public static function form(Schema $schema): Schema
     {
         return SurveyForm::configure($schema);
