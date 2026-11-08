@@ -92,13 +92,38 @@ class LegacySurveyViewController extends Controller
             $query->whereRaw("EXTRACT(YEAR FROM policy_period_start) = ?", [(int) $year]);
         }
 
-        // Filter tab kategori treatment jika dipilih (Underwriting, Self Assessment, Photo Album, Survey)
-        $tab = $request->input('tab', 'Self Assessment');
-        if ($tab && strtolower($tab) !== 'all') {
-            $query->where('condition_type', $tab);
+        $allSurveys = $query->orderBy('policy_period_start', 'desc')->get();
+
+        // Kelompokkan data per Risk Treatment (1:1 format legacy M_surveys::risk_treatment)
+        $groupedSurveys = [
+            'Self Assessment' => [],
+            'Photo Album' => [],
+            'Survey' => [],
+            'Underwriting' => [],
+        ];
+
+        foreach ($allSurveys as $s) {
+            $treatment = trim($s->condition_type ?? 'Survey');
+            if (!isset($groupedSurveys[$treatment])) {
+                $groupedSurveys[$treatment] = [];
+            }
+            $groupedSurveys[$treatment][] = $s;
         }
 
-        $surveys = $query->orderBy('policy_period_start', 'desc')->get();
+        // Tentukan tab aktif default
+        $activeTab = $request->input('tab');
+        if (!$activeTab) {
+            // Jika ada data di Self Assessment, pilih Self Assessment. Jika tidak, pilih tab yang ada datanya
+            if (count($groupedSurveys['Self Assessment']) > 0) {
+                $activeTab = 'Self Assessment';
+            } elseif (count($groupedSurveys['Survey']) > 0) {
+                $activeTab = 'Survey';
+            } elseif (count($groupedSurveys['Photo Album']) > 0) {
+                $activeTab = 'Photo Album';
+            } else {
+                $activeTab = 'Self Assessment';
+            }
+        }
 
         // Ambil daftar tahun yang tersedia untuk filter bar atas
         $availableYears = Survey::whereNotNull('policy_period_start')
@@ -109,7 +134,15 @@ class LegacySurveyViewController extends Controller
             ->filter(fn ($y) => $y > 0)
             ->toArray();
 
-        return view('legacy-admin.surveys-data', compact('surveys', 'companyId', 'company', 'year', 'tab', 'availableYears'));
+        return view('legacy-admin.surveys-data', compact(
+            'groupedSurveys',
+            'allSurveys',
+            'companyId',
+            'company',
+            'year',
+            'activeTab',
+            'availableYears'
+        ));
     }
 
     /**
