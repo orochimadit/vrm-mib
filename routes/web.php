@@ -40,3 +40,11 @@ Route::match(['get', 'post'], '/admin/claims/years', [LegacyClaimViewController:
     ->name('claims.legacy.years');
 Route::get('/admin/claims/data/{type?}/{year?}', [LegacyClaimViewController::class, 'data'])
     ->name('claims.legacy.data');
+Route::get('/admin/claims/{claim}', [LegacyClaimViewController::class, 'showDetail'])
+    ->whereNumber('claim')
+    ->name('claims.legacy.detail');
+Route::get('/admin/claims/{claim}/detail', [LegacyClaimViewController::class, 'showDetail'])
+    ->whereNumber('claim');
+Route::get('/admin/claims/{claim}/summary', [LegacyClaimViewController::class, 'showSummary'])
+    ->whereNumber('claim')
+    ->name('claims.legacy.summary');

@@ -79,7 +79,6 @@ class LegacyClaimViewController extends Controller
 
         $claims = $query->orderBy('case_handled', 'desc')->get();
 
-        // Ambil daftar tahun unik untuk quick-filter tab di atas tabel
         $availableYears = Claim::whereNotNull('case_handled')
             ->when($type !== 'all', fn ($q) => $q->where('portfolio_consultant', $type))
             ->selectRaw("DISTINCT EXTRACT(YEAR FROM case_handled)::int as tahun")
@@ -88,5 +87,35 @@ class LegacyClaimViewController extends Controller
             ->toArray();
 
         return view('legacy-admin.claims-data', compact('claims', 'type', 'year', 'availableYears'));
+    }
+
+    /**
+     * Tampilkan Halaman Detail Kasus Klaim 1:1 format legacy Jeramin (claims/views/detail.php).
+     */
+    public function showDetail(Claim $claim): View
+    {
+        $claim->loadMissing([
+            'vessel.ownerCompany',
+            'insuranceCompany',
+            'insuranceProduct',
+            'casualtyRef',
+        ]);
+
+        return view('legacy-admin.claims-detail', compact('claim'));
+    }
+
+    /**
+     * Tampilkan Halaman Summary Kasus Klaim 1:1 format legacy Jeramin (claims/views/summary.php).
+     */
+    public function showSummary(Claim $claim): View
+    {
+        $claim->loadMissing([
+            'vessel.ownerCompany',
+            'insuranceCompany',
+            'insuranceProduct',
+            'casualtyRef',
+        ]);
+
+        return view('legacy-admin.claims-summary', compact('claim'));
     }
 }
