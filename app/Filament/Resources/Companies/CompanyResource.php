@@ -29,6 +29,11 @@ class CompanyResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    public static function getNavigationUrl(): string
+    {
+        return route('companies.legacy.index');
+    }
+
     public static function canViewAny(): bool
     {
         return Auth::user()?->role === 'admin_mcm';

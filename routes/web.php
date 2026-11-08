@@ -3,6 +3,7 @@
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LegacyClaimViewController;
 use App\Http\Controllers\LegacySurveyViewController;
+use App\Http\Controllers\LegacyVesselCompanyController;
 use App\Http\Controllers\SurveyReportController;
 use Illuminate\Support\Facades\Route;
 
@@ -66,3 +67,43 @@ Route::get('/admin/claims/{claim}/detail', [LegacyClaimViewController::class, 's
 Route::get('/admin/claims/{claim}/summary', [LegacyClaimViewController::class, 'showSummary'])
     ->whereNumber('claim')
     ->name('claims.legacy.summary');
+
+// Dedicated Legacy 1:1 Vessel & Owner Company
+Route::get('/admin/companies', [LegacyVesselCompanyController::class, 'indexCompanies'])
+    ->name('companies.legacy.index');
+Route::get('/admin/companies/create', [LegacyVesselCompanyController::class, 'createCompany'])
+    ->name('companies.legacy.create');
+Route::post('/admin/companies', [LegacyVesselCompanyController::class, 'storeCompany'])
+    ->name('companies.legacy.store');
+Route::get('/admin/companies/{company}/edit', [LegacyVesselCompanyController::class, 'editCompany'])
+    ->name('companies.legacy.edit');
+Route::match(['put', 'post'], '/admin/companies/{company}', [LegacyVesselCompanyController::class, 'updateCompany'])
+    ->name('companies.legacy.update');
+Route::match(['delete', 'get'], '/admin/companies/{company}/delete', [LegacyVesselCompanyController::class, 'deleteCompany'])
+    ->name('companies.legacy.delete');
+
+// Dedicated Legacy 1:1 Vessels by Company & Management Form
+Route::get('/admin/companies/{company}/vessels', [LegacyVesselCompanyController::class, 'companyVessels'])
+    ->name('companies.legacy.vessels');
+Route::get('/admin/vessels', [LegacyVesselCompanyController::class, 'companyVessels'])
+    ->name('vessels.legacy.index');
+Route::get('/admin/vessels/create', [LegacyVesselCompanyController::class, 'createVessel'])
+    ->name('vessels.legacy.create');
+Route::post('/admin/vessels', [LegacyVesselCompanyController::class, 'storeVessel'])
+    ->name('vessels.legacy.store');
+Route::get('/admin/vessels/{vessel}/edit', [LegacyVesselCompanyController::class, 'editVessel'])
+    ->name('vessels.legacy.edit');
+Route::match(['put', 'post'], '/admin/vessels/{vessel}', [LegacyVesselCompanyController::class, 'updateVessel'])
+    ->name('vessels.legacy.update');
+Route::match(['delete', 'get'], '/admin/vessels/{vessel}/delete', [LegacyVesselCompanyController::class, 'deleteVessel'])
+    ->name('vessels.legacy.delete');
+
+// Aliases matching exact legacy URLs
+Route::get('/kapal/company', [LegacyVesselCompanyController::class, 'indexCompanies']);
+Route::get('/kapal/company.html', [LegacyVesselCompanyController::class, 'indexCompanies']);
+Route::get('/kapal/company/form', [LegacyVesselCompanyController::class, 'createCompany']);
+Route::get('/kapal/company/form.html', [LegacyVesselCompanyController::class, 'createCompany']);
+Route::get('/kapal/index/{company}', [LegacyVesselCompanyController::class, 'companyVessels']);
+Route::get('/kapal/index/{company}.html', [LegacyVesselCompanyController::class, 'companyVessels']);
+Route::get('/kapal/form', [LegacyVesselCompanyController::class, 'createVessel']);
+Route::get('/kapal/form.html', [LegacyVesselCompanyController::class, 'createVessel']);
