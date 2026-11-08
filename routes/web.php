@@ -23,12 +23,22 @@ Route::match(['get', 'post'], '/admin/surveys/years', [LegacySurveyViewControlle
     ->name('surveys.legacy.years');
 Route::get('/admin/surveys/data/{companyId?}/{year?}', [LegacySurveyViewController::class, 'data'])
     ->name('surveys.legacy.data');
+Route::get('/admin/surveys/{survey}/condition', [LegacySurveyViewController::class, 'showCondition'])
+    ->name('surveys.legacy.condition');
+Route::post('/admin/surveys/{survey}/condition', [LegacySurveyViewController::class, 'updateCondition'])
+    ->name('surveys.legacy.condition.update');
 Route::get('/admin/surveys/{survey}/form', [LegacySurveyViewController::class, 'showForm'])
     ->name('surveys.legacy.form');
 Route::post('/admin/surveys/{survey}/form', [LegacySurveyViewController::class, 'updateForm'])
     ->name('surveys.legacy.form.update');
 Route::get('/admin/surveys/{survey}/result', [LegacySurveyViewController::class, 'showResult'])
     ->name('surveys.legacy.result');
+Route::get('/admin/surveys/{survey}/deficiency-list', [LegacySurveyViewController::class, 'showDeficiency'])
+    ->name('surveys.legacy.deficiency');
+Route::get('/admin/surveys/{survey}/assignment', [LegacySurveyViewController::class, 'showEdit'])
+    ->name('surveys.legacy.edit');
+Route::post('/admin/surveys/{survey}/assignment', [LegacySurveyViewController::class, 'updateEdit'])
+    ->name('surveys.legacy.edit.update');
 
 // Dedicated secure document streaming & missing file handler
 Route::get('/document/attachment/{filename}', [DocumentController::class, 'show'])

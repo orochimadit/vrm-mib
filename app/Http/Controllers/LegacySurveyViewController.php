@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Broker;
 use App\Models\InsuranceCompany;
 use App\Models\Survey;
+use App\Models\SurveyDefect;
 use App\Models\SurveyItem;
 use App\Models\SurveyResponse;
+use App\Models\Surveyor;
+use App\Models\Vessel;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -219,5 +223,110 @@ class LegacySurveyViewController extends Controller
         $responses = $survey->responses->keyBy('item_id');
 
         return view('legacy-admin.survey-result', compact('survey', 'items', 'responses'));
+    }
+
+    /**
+     * Tampilkan Halaman Form Condition Survey 1:1 format legacy Jeramin (views/form_condition.php).
+     */
+    public function showCondition(Survey $survey): View
+    {
+        $survey->loadMissing([
+            'vessel.ownerCompany',
+            'vessel.vesselType',
+            'surveyor',
+            'broker',
+            'insuranceCompany',
+        ]);
+
+        return view('legacy-admin.survey-condition', compact('survey'));
+    }
+
+    /**
+     * Simpan pembaruan dari Form Condition Survey.
+     */
+    public function updateCondition(Request $request, Survey $survey): RedirectResponse
+    {
+        $survey->update([
+            'surveyor_name' => $request->input('surveyor_name'),
+            'date_of_survey' => $request->input('date_of_survey'),
+            'location' => $request->input('location'),
+            'policy_period_start' => $request->input('policy_period_start'),
+            'policy_period_end' => $request->input('policy_period_end'),
+            'due_date' => $request->input('due_date'),
+        ]);
+
+        if ($request->input('submit') === 'next') {
+            return redirect()->route('surveys.legacy.form', $survey->id);
+        }
+
+        return redirect()->back()->with('success', 'Data Condition Survey berhasil diperbarui.');
+    }
+
+    /**
+     * Tampilkan Halaman List of Deficiency 1:1 format legacy Jeramin (views/deficiency.php).
+     */
+    public function showDeficiency(Request $request, Survey $survey): View
+    {
+        $survey->loadMissing([
+            'vessel.ownerCompany',
+            'surveyor',
+            'insuranceCompany',
+        ]);
+
+        $status = $request->input('status', '0');
+
+        $defects = SurveyDefect::where('survey_id', $survey->id)
+            ->when($status === '2', fn ($q) => $q->whereIn('status', ['Approve', 'Closed', 'Completed']))
+            ->when($status === '0', fn ($q) => $q->where(fn ($sq) => $sq->whereNotIn('status', ['Approve', 'Closed', 'Completed'])->orWhereNull('status')))
+            ->orderBy('id', 'asc')
+            ->get();
+
+        return view('legacy-admin.survey-deficiency', compact('survey', 'defects', 'status'));
+    }
+
+    /**
+     * Tampilkan Form Penugasan Surveyor (Edit) 1:1 format legacy Jeramin (views/form_penugasan.php).
+     */
+    public function showEdit(Survey $survey): View
+    {
+        $survey->loadMissing([
+            'vessel.ownerCompany',
+            'vessel.vesselType',
+            'surveyor',
+            'broker',
+            'insuranceCompany',
+        ]);
+
+        $vessels = Vessel::with('ownerCompany', 'vesselType')->orderBy('name', 'asc')->get();
+        $surveyors = Surveyor::orderBy('name', 'asc')->get();
+        $brokers = Broker::orderBy('name', 'asc')->get();
+        $insuranceCompanies = InsuranceCompany::orderBy('name', 'asc')->get();
+
+        return view('legacy-admin.survey-edit', compact(
+            'survey',
+            'vessels',
+            'surveyors',
+            'brokers',
+            'insuranceCompanies'
+        ));
+    }
+
+    /**
+     * Simpan pembaruan dari Form Penugasan (Edit).
+     */
+    public function updateEdit(Request $request, Survey $survey): RedirectResponse
+    {
+        $survey->update([
+            'vessel_id' => $request->input('vessel_id', $survey->vessel_id),
+            'surveyor_id' => $request->input('surveyor_id', $survey->surveyor_id),
+            'broker_id' => $request->input('broker_id', $survey->broker_id),
+            'insurance_company_id' => $request->input('insurance_company_id', $survey->insurance_company_id),
+            'condition_type' => $request->input('condition_type', $survey->condition_type),
+            'due_date' => $request->input('due_date', $survey->due_date),
+            'policy_period_start' => $request->input('policy_period_start', $survey->policy_period_start),
+            'policy_period_end' => $request->input('policy_period_end', $survey->policy_period_end),
+        ]);
+
+        return redirect()->back()->with('success', 'Data Penugasan Survei berhasil diperbarui.');
     }
 }

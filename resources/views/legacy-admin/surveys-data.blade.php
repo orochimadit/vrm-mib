@@ -163,19 +163,19 @@
                                         </td>
                                         <td class="align-middle text-center" style="white-space: nowrap;">
                                             <div class="btn-group btn-group-sm" role="group">
-                                                <a href="{{ route('surveys.report', $row->id) }}" target="_blank" class="btn btn-info btn-sm font-weight-bold mr-1" title="Condition Report">
+                                                <a href="{{ route('surveys.legacy.condition', $row->id) }}" class="btn btn-info btn-sm font-weight-bold mr-1" title="Condition Survey Form">
                                                     Condition
                                                 </a>
-                                                <a href="{{ route('surveys.legacy.form', $row->id) }}" class="btn btn-primary btn-sm font-weight-bold mr-1" title="Survey Form">
+                                                <a href="{{ route('surveys.legacy.form', $row->id) }}" class="btn btn-primary btn-sm font-weight-bold mr-1" title="Survey Checklist Form">
                                                     Survey
                                                 </a>
                                                 <a href="{{ route('surveys.legacy.result', $row->id) }}" class="btn btn-success btn-sm font-weight-bold mr-1" title="Result Summary">
                                                     Result
                                                 </a>
-                                                <a href="{{ url('/admin/surveys/' . $row->id . '/deficiency') }}" class="btn btn-danger btn-sm font-weight-bold mr-1" title="List Of Deficiency">
+                                                <a href="{{ route('surveys.legacy.deficiency', $row->id) }}" class="btn btn-danger btn-sm font-weight-bold mr-1" title="List Of Deficiency">
                                                     List Of Deficiency
                                                 </a>
-                                                <a href="{{ url('/admin/surveys/' . $row->id . '/edit') }}" class="btn btn-warning text-white btn-sm font-weight-bold mr-1" title="Edit">
+                                                <a href="{{ route('surveys.legacy.edit', $row->id) }}" class="btn btn-warning text-white btn-sm font-weight-bold mr-1" title="Edit Assignment">
                                                     Edit
                                                 </a>
                                                 <button type="button" class="btn btn-danger btn-sm font-weight-bold mr-1" onclick="alert('Fitur hapus dinonaktifkan untuk menjaga integritas data demo.')" title="Delete">
