@@ -20,6 +20,13 @@ Route::get('/admin/services', [LegacySurveyViewController::class, 'servicesHub']
     ->name('services.legacy.hub');
 Route::get('/admin/surveys', [LegacySurveyViewController::class, 'companiesHub'])
     ->name('surveys.legacy.hub');
+Route::get('/admin/surveys/create', [LegacySurveyViewController::class, 'createAssignment'])
+    ->name('surveys.legacy.create');
+Route::post('/admin/surveys', [LegacySurveyViewController::class, 'storeAssignment'])
+    ->name('surveys.legacy.store');
+Route::get('/admin/surveys/api/vessel/{id}', [LegacySurveyViewController::class, 'apiVesselDetails'])
+    ->name('surveys.legacy.api.vessel');
+Route::get('/surveys/form_penugasan', [LegacySurveyViewController::class, 'createAssignment']);
 Route::match(['get', 'post'], '/admin/surveys/years', [LegacySurveyViewController::class, 'getYears'])
     ->name('surveys.legacy.years');
 Route::get('/admin/surveys/data/{companyId?}/{year?}', [LegacySurveyViewController::class, 'data'])

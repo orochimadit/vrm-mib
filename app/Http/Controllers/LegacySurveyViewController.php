@@ -329,4 +329,73 @@ class LegacySurveyViewController extends Controller
 
         return redirect()->back()->with('success', 'Data Penugasan Survei berhasil diperbarui.');
     }
+
+    /**
+     * Tampilkan Halaman Penugasan Survei Baru (Add New Assignment)
+     * 1:1 format legacy kapal/views/form_penugasan.php (Screenshot vrm_surveys_add_new_assignment.png).
+     */
+    public function createAssignment(): View
+    {
+        $vessels = Vessel::with(['ownerCompany', 'vesselType'])->orderBy('name', 'asc')->get();
+        $surveyors = Surveyor::orderBy('name', 'asc')->get();
+        $brokers = Broker::orderBy('name', 'asc')->get();
+        $insuranceCompanies = InsuranceCompany::orderBy('name', 'asc')->get();
+
+        return view('legacy-admin.survey-assignment-create', compact(
+            'vessels',
+            'surveyors',
+            'brokers',
+            'insuranceCompanies'
+        ));
+    }
+
+    /**
+     * Simpan Penugasan Survei Baru ke Database.
+     */
+    public function storeAssignment(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'vessel_id' => 'required|integer',
+            'insurance_company_id' => 'required|integer',
+            'surveyor_id' => 'nullable|integer',
+            'broker_id' => 'nullable|integer',
+            'condition_type' => 'required|string',
+            'due_date' => 'nullable|date',
+            'policy_period_start' => 'nullable|date',
+            'policy_period_end' => 'nullable|date',
+        ]);
+
+        $surveyor = $request->filled('surveyor_id') ? Surveyor::find($request->surveyor_id) : null;
+        $validated['surveyor_name'] = $surveyor?->name ?? 'PT. MARINE INSURANCE BROKER';
+        $validated['status'] = 'Outstanding';
+        $validated['form_status'] = 'draft';
+
+        $survey = Survey::create($validated);
+
+        $year = $survey->policy_period_start ? \Carbon\Carbon::parse($survey->policy_period_start)->format('Y') : 'ALL';
+
+        return redirect()->route('surveys.legacy.data', [$survey->insurance_company_id, $year])
+            ->with('success', 'Penugasan survei kapal berhasil ditambahkan.');
+    }
+
+    /**
+     * API JSON detail kapal untuk AJAX penugasan.
+     */
+    public function apiVesselDetails($id): JsonResponse
+    {
+        $vessel = Vessel::with(['ownerCompany', 'vesselType'])->find($id);
+        if (!$vessel) {
+            return response()->json([], 404);
+        }
+
+        return response()->json([
+            'company_name' => $vessel->ownerCompany?->name ?? '-',
+            'contact_info' => $vessel->ownerCompany?->contact_info ?? '-',
+            'pic' => $vessel->ownerCompany?->pic ?? '-',
+            'name' => $vessel->name,
+            'type' => $vessel->vesselType?->name ?? ($vessel->type_name_legacy ?? 'GENERAL CARGO'),
+            'year_built' => $vessel->year_built ?? '-',
+            'tsi' => number_format((float) $vessel->tsi, 2),
+        ]);
+    }
 }
