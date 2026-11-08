@@ -130,10 +130,16 @@
                             <span class="text-nav">Surveyor Company</span>
                         </a>
                     </li>
-                    <li class="active">
+                    <li class="{{ request()->is('admin/surveys*') ? 'active' : '' }}">
                         <a href="{{ url('/admin/surveys') }}">
                             <i class="fa fa-bars"></i>
                             <span class="text-nav font-weight-bold">Vessel Risk Management</span>
+                        </a>
+                    </li>
+                    <li class="{{ request()->is('admin/claims*') ? 'active' : '' }}">
+                        <a href="{{ url('/admin/claims') }}">
+                            <i class="fa fa-list-alt"></i>
+                            <span class="text-nav font-weight-bold">Claim Solution</span>
                         </a>
                     </li>
                     <li class="{{ request()->is('admin/insurance-companies*') || request()->is('admin/claim-adjusters*') ? 'active' : '' }}">

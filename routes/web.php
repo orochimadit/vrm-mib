@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\LegacyClaimViewController;
 use App\Http\Controllers\LegacySurveyViewController;
 use App\Http\Controllers\SurveyReportController;
 use Illuminate\Support\Facades\Route;
@@ -31,3 +32,11 @@ Route::get('/storage/attachment/{filename}', [DocumentController::class, 'show']
 
 Route::get('/storage/attachments/{filename}', [DocumentController::class, 'show'])
     ->where('filename', '.*');
+
+// Dedicated Legacy 1:1 Claim Solution Hub & Data Views
+Route::get('/admin/claims', [LegacyClaimViewController::class, 'index'])
+    ->name('claims.legacy.index');
+Route::match(['get', 'post'], '/admin/claims/years', [LegacyClaimViewController::class, 'getYears'])
+    ->name('claims.legacy.years');
+Route::get('/admin/claims/data/{type?}/{year?}', [LegacyClaimViewController::class, 'data'])
+    ->name('claims.legacy.data');

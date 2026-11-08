@@ -31,6 +31,11 @@ class ClaimResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function getNavigationUrl(): string
+    {
+        return route('claims.legacy.index');
+    }
+
     public static function canViewAny(): bool
     {
         return Auth::user()?->role === 'admin_mcm';
