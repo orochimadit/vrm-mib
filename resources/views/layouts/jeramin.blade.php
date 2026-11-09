@@ -48,7 +48,7 @@
         <nav class="navbar navbar-expand navbar-light nav-header px-2">
             <!-- Logo Header -->
             <div class="logo-wrapper">
-                <a class="navbar-brand" href="{{ url('/admin') }}">
+                <a class="navbar-brand" href="{{ url('/admin/dashboard') }}">
                     <h4 class="mb-0 font-weight-bold" style="font-size: 1.1rem; letter-spacing: 0.5px;">VESSEL RISK MANAGEMENT</h4>
                 </a>
                 <div class="sidebar-toggle-sm">
@@ -100,8 +100,8 @@
         <div class="sidebar-inner">
             <nav class="sidebar-nav">
                 <ul>
-                    <li class="{{ request()->is('admin') ? 'active' : '' }}">
-                        <a href="{{ url('/admin') }}">
+                    <li class="{{ request()->is('admin/dashboard*') || request()->is('dashboard*') || (request()->is('admin') && !request()->is('admin/*')) ? 'active' : '' }}">
+                        <a href="{{ url('/admin/dashboard') }}">
                             <i class="fa fa-home"></i>
                             <span class="text-nav">Dashboard</span>
                         </a>

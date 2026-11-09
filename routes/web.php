@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LegacyClaimViewController;
+use App\Http\Controllers\LegacyDashboardController;
 use App\Http\Controllers\LegacySurveyViewController;
 use App\Http\Controllers\LegacyVesselCompanyController;
 use App\Http\Controllers\SurveyReportController;
@@ -10,6 +11,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+// Dedicated Legacy 1:1 Dashboard & Modern Analytics
+Route::get('/admin/dashboard', [LegacyDashboardController::class, 'index'])
+    ->name('dashboard.legacy.index');
+Route::get('/dashboard', [LegacyDashboardController::class, 'index']);
 
 // Dedicated Survey Condition Report (Printable & View 1:1 Legacy result.php)
 Route::get('/surveys/{survey}/report', [SurveyReportController::class, 'show'])
