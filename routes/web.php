@@ -13,6 +13,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Legacy login redirects
+Route::get('/login', function () {
+    return redirect()->route('filament.admin.auth.login');
+})->name('login');
+Route::get('/login.html', function () {
+    return redirect()->route('filament.admin.auth.login');
+});
+
 // Dedicated Legacy 1:1 Dashboard & Modern Analytics
 Route::get('/admin/dashboard', [LegacyDashboardController::class, 'index'])
     ->name('dashboard.legacy.index');
