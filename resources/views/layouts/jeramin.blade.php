@@ -118,7 +118,7 @@
                             <span class="text-nav">Vessel &amp; Owner Company</span>
                         </a>
                     </li>
-                    <li class="{{ request()->is('admin/insurance-products*') ? 'active' : '' }}">
+                    <li class="{{ request()->is('admin/insurance-products*') || request()->is('insurance/product*') ? 'active' : '' }}">
                         <a href="{{ url('/admin/insurance-products') }}">
                             <i class="fa fa-th-list"></i>
                             <span class="text-nav">Product Insurance</span>
@@ -142,14 +142,21 @@
                             <span class="text-nav font-weight-bold">Claim Solution</span>
                         </a>
                     </li>
-                    <li class="{{ request()->is('admin/insurance-companies*') || request()->is('admin/claim-adjusters*') ? 'active' : '' }}">
+                    <li class="{{ request()->is('admin/insurance*') || request()->is('insurance/*') || request()->is('admin/claim-adjusters*') ? 'active' : '' }}">
                         <a href="#insuranceSubmenu" data-toggle="collapse" class="dropdown-toggle">
                             <i class="fa fa-shield"></i>
                             <span class="text-nav">Insurance</span>
                         </a>
-                        <ul class="collapse list-unstyled pl-3 {{ request()->is('admin/insurance-companies*') || request()->is('admin/claim-adjusters*') ? 'show' : '' }}" id="insuranceSubmenu">
-                            <li><a href="{{ url('/admin/insurance-companies') }}"><span class="text-nav">Companies</span></a></li>
-                            <li><a href="{{ url('/admin/claim-adjusters') }}"><span class="text-nav">Claim Adjusters</span></a></li>
+                        <ul class="collapse list-unstyled pl-3 {{ request()->is('admin/insurance*') || request()->is('insurance/*') || request()->is('admin/claim-adjusters*') ? 'show' : '' }}" id="insuranceSubmenu">
+                            <li class="{{ request()->is('admin/insurance-companies*') || request()->is('insurance/company*') ? 'active font-weight-bold' : '' }}">
+                                <a href="{{ url('/admin/insurance-companies') }}"><span class="text-nav">Company</span></a>
+                            </li>
+                            <li class="{{ request()->is('admin/insurance-products*') || request()->is('insurance/product*') ? 'active font-weight-bold' : '' }}">
+                                <a href="{{ url('/admin/insurance-products') }}"><span class="text-nav">Product</span></a>
+                            </li>
+                            <li class="{{ request()->is('admin/claim-adjusters*') ? 'active font-weight-bold' : '' }}">
+                                <a href="{{ url('/admin/claim-adjusters') }}"><span class="text-nav">Claim Adjusters</span></a>
+                            </li>
                         </ul>
                     </li>
                     <li class="{{ request()->is('admin/brokers*') ? 'active' : '' }}">

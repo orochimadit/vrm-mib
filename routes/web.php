@@ -3,6 +3,7 @@
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\LegacyClaimViewController;
 use App\Http\Controllers\LegacyDashboardController;
+use App\Http\Controllers\LegacyInsuranceController;
 use App\Http\Controllers\LegacySurveyViewController;
 use App\Http\Controllers\LegacyVesselCompanyController;
 use App\Http\Controllers\SurveyReportController;
@@ -120,3 +121,79 @@ Route::get('/kapal/index/{company}', [LegacyVesselCompanyController::class, 'com
 Route::get('/kapal/index/{company}.html', [LegacyVesselCompanyController::class, 'companyVessels']);
 Route::get('/kapal/form', [LegacyVesselCompanyController::class, 'createVessel']);
 Route::get('/kapal/form.html', [LegacyVesselCompanyController::class, 'createVessel']);
+
+// Dedicated Legacy 1:1 Insurance Company
+Route::get('/admin/insurance-companies', [LegacyInsuranceController::class, 'indexCompanies'])
+    ->name('insurance.companies.index');
+Route::get('/admin/insurance-companies/create', [LegacyInsuranceController::class, 'createCompany'])
+    ->name('insurance.companies.create');
+Route::post('/admin/insurance-companies', [LegacyInsuranceController::class, 'storeCompany'])
+    ->name('insurance.companies.store');
+Route::get('/admin/insurance-companies/{company}/edit', [LegacyInsuranceController::class, 'editCompany'])
+    ->name('insurance.companies.edit');
+Route::match(['put', 'post'], '/admin/insurance-companies/{company}', [LegacyInsuranceController::class, 'updateCompany'])
+    ->name('insurance.companies.update');
+Route::match(['delete', 'get'], '/admin/insurance-companies/{company}/delete', [LegacyInsuranceController::class, 'deleteCompany'])
+    ->name('insurance.companies.delete');
+
+// Legacy Insurance Company Aliases
+Route::get('/insurance/company', [LegacyInsuranceController::class, 'indexCompanies']);
+Route::get('/insurance/company.html', [LegacyInsuranceController::class, 'indexCompanies']);
+Route::get('/insurance/company/create', [LegacyInsuranceController::class, 'createCompany']);
+Route::get('/insurance/company/create.html', [LegacyInsuranceController::class, 'createCompany']);
+Route::get('/insurance/company/form', [LegacyInsuranceController::class, 'createCompany']);
+Route::post('/insurance/company/proses', function (\Illuminate\Http\Request $request, LegacyInsuranceController $controller) {
+    if ($request->input('id')) {
+        return $controller->updateCompany($request, $request->input('id'));
+    }
+    return $controller->storeCompany($request);
+});
+Route::get('/insurance/company/edit/{company}', [LegacyInsuranceController::class, 'editCompany']);
+Route::get('/insurance/company/delete/{company}', [LegacyInsuranceController::class, 'deleteCompany']);
+
+// Dedicated Legacy 1:1 Product Insurance
+Route::get('/admin/insurance-products', [LegacyInsuranceController::class, 'indexProducts'])
+    ->name('insurance.products.index');
+Route::get('/admin/insurance-products/company/{company?}', [LegacyInsuranceController::class, 'companyProducts'])
+    ->name('insurance.products.company');
+Route::get('/admin/insurance-products/create', [LegacyInsuranceController::class, 'createProduct'])
+    ->name('insurance.products.create');
+Route::post('/admin/insurance-products', [LegacyInsuranceController::class, 'storeProduct'])
+    ->name('insurance.products.store');
+Route::get('/admin/insurance-products/{product}/edit', [LegacyInsuranceController::class, 'editProduct'])
+    ->name('insurance.products.edit');
+Route::match(['put', 'post'], '/admin/insurance-products/{product}', [LegacyInsuranceController::class, 'updateProduct'])
+    ->name('insurance.products.update');
+Route::match(['delete', 'get'], '/admin/insurance-products/{product}/delete', [LegacyInsuranceController::class, 'deleteProduct'])
+    ->name('insurance.products.delete');
+
+// Legacy Insurance Product Aliases
+Route::get('/insurance/product', [LegacyInsuranceController::class, 'indexProducts']);
+Route::get('/insurance/product.html', [LegacyInsuranceController::class, 'indexProducts']);
+Route::get('/insurance/product_claim', [LegacyInsuranceController::class, 'indexProducts']);
+Route::get('/insurance/product/data/{company?}', [LegacyInsuranceController::class, 'companyProducts']);
+Route::get('/insurance/product/data/{company?}.html', [LegacyInsuranceController::class, 'companyProducts']);
+Route::get('/insurance/product/create', [LegacyInsuranceController::class, 'createProduct']);
+Route::get('/insurance/product/create.html', [LegacyInsuranceController::class, 'createProduct']);
+Route::post('/insurance/product/process', function (\Illuminate\Http\Request $request, LegacyInsuranceController $controller) {
+    if ($request->input('id')) {
+        return $controller->updateProduct($request, $request->input('id'));
+    }
+    return $controller->storeProduct($request);
+});
+Route::post('/insurance/product/proses', function (\Illuminate\Http\Request $request, LegacyInsuranceController $controller) {
+    if ($request->input('id')) {
+        return $controller->updateProduct($request, $request->input('id'));
+    }
+    return $controller->storeProduct($request);
+});
+Route::get('/insurance/product/edit/{product}', [LegacyInsuranceController::class, 'editProduct']);
+Route::get('/insurance/product/delete/{product}', [LegacyInsuranceController::class, 'deleteProduct']);
+
+// Attributes & Items
+Route::get('/insurance/attributes/set/{product}', [LegacyInsuranceController::class, 'setAttributes'])
+    ->name('insurance.attributes.set');
+Route::get('/admin/insurance/attributes/{product}', [LegacyInsuranceController::class, 'setAttributes']);
+Route::get('/surveys/items/index/{product}', [LegacyInsuranceController::class, 'surveyItems'])
+    ->name('surveys.items.index');
+Route::get('/admin/surveys/items/{product}', [LegacyInsuranceController::class, 'surveyItems']);
