@@ -16,13 +16,21 @@ class LegacyInsuranceController extends Controller
         4 => 'Underwriting',
     ];
 
+    public const RISK_VALUES = [
+        1 => 'Low',
+        2 => 'Medium',
+        3 => 'High',
+        4 => 'Critical',
+        'LOW' => 'Low',
+        'MEDIUM' => 'Medium',
+        'HIGH' => 'High',
+        'CRITICAL' => 'Critical',
+    ];
+
     /* =========================================================================
      * INSURANCE COMPANY
      * ========================================================================= */
 
-    /**
-     * List all Insurance Companies (1:1 with legacy /insurance/company.html)
-     */
     public function indexCompanies(Request $request)
     {
         $companies = InsuranceCompany::orderBy('name', 'asc')->get();
@@ -33,9 +41,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Create Insurance Company Form (1:1 with legacy /insurance/company/create.html)
-     */
     public function createCompany(Request $request)
     {
         return view('legacy-admin.insurance.company-form', [
@@ -45,9 +50,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Store Insurance Company
-     */
     public function storeCompany(Request $request)
     {
         $validated = $request->validate([
@@ -64,9 +66,6 @@ class LegacyInsuranceController extends Controller
             ->with('msg', '<div class="alert alert-success">Company data has been added successfully</div>');
     }
 
-    /**
-     * Edit Insurance Company Form
-     */
     public function editCompany($id)
     {
         $company = InsuranceCompany::findOrFail($id);
@@ -78,9 +77,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Update Insurance Company
-     */
     public function updateCompany(Request $request, $id = null)
     {
         $id = $id ?: $request->input('id');
@@ -100,9 +96,6 @@ class LegacyInsuranceController extends Controller
             ->with('msg', '<div class="alert alert-success">Company data has been updated successfully</div>');
     }
 
-    /**
-     * Delete Insurance Company
-     */
     public function deleteCompany($id)
     {
         $company = InsuranceCompany::findOrFail($id);
@@ -116,9 +109,6 @@ class LegacyInsuranceController extends Controller
      * PRODUCT INSURANCE
      * ========================================================================= */
 
-    /**
-     * Company Cards Grid Hub (1:1 with legacy /insurance/product.html)
-     */
     public function indexProducts(Request $request)
     {
         $companies = InsuranceCompany::orderBy('name', 'asc')->get();
@@ -130,9 +120,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Product Management Table for a specific Company (1:1 with legacy /insurance/product/data/{id})
-     */
     public function companyProducts(Request $request, $companyId = 0)
     {
         $company = null;
@@ -155,9 +142,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Create Product Form (1:1 with legacy /insurance/product/create)
-     */
     public function createProduct(Request $request)
     {
         $companies = InsuranceCompany::orderBy('name', 'asc')->get();
@@ -173,9 +157,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Store Product
-     */
     public function storeProduct(Request $request)
     {
         $validated = $request->validate([
@@ -202,9 +183,6 @@ class LegacyInsuranceController extends Controller
             ->with('msg', '<div class="alert alert-success">Product has been added successfully.</div>');
     }
 
-    /**
-     * Edit Product Form
-     */
     public function editProduct($id)
     {
         $product = InsuranceProduct::with('insuranceCompany')->findOrFail($id);
@@ -220,9 +198,6 @@ class LegacyInsuranceController extends Controller
         ]);
     }
 
-    /**
-     * Update Product
-     */
     public function updateProduct(Request $request, $id = null)
     {
         $id = $id ?: $request->input('id');
@@ -248,9 +223,6 @@ class LegacyInsuranceController extends Controller
             ->with('msg', '<div class="alert alert-success">Product has been updated successfully.</div>');
     }
 
-    /**
-     * Delete Product
-     */
     public function deleteProduct($id)
     {
         $product = InsuranceProduct::findOrFail($id);
@@ -261,32 +233,234 @@ class LegacyInsuranceController extends Controller
             ->with('msg', '<div class="alert alert-success">Product has been deleted successfully.</div>');
     }
 
-    /**
-     * Vessel Attributes Configuration View (1:1 with /insurance/attributes/set/{id})
-     */
+    /* =========================================================================
+     * VESSEL ATTRIBUTES (1:1 with legacy /insurance/attributes/set/{id})
+     * ========================================================================= */
+
     public function setAttributes($id)
     {
         $product = InsuranceProduct::with('insuranceCompany')->findOrFail($id);
+
+        $baseParticulars = [
+            ['label' => 'Vessel Name', 'editable' => false],
+            ['label' => 'Vessel Type', 'editable' => false],
+            ['label' => 'Year Built', 'editable' => false],
+            ['label' => 'GRT', 'editable' => false],
+            ['label' => 'Total Sum Insured', 'editable' => false],
+        ];
+
+        $customParticulars = DB::table('vessel_attributes')
+            ->where('insurance_product_id', $id)
+            ->where('category_attr_type', 'vessel_particulars')
+            ->orderBy('attribute_id')
+            ->get();
+
+        $mainEngine = DB::table('vessel_attributes')
+            ->where('insurance_product_id', $id)
+            ->where('category_attr_type', 'main_engine')
+            ->orderBy('attribute_id')
+            ->get();
+
+        $auxEngine = DB::table('vessel_attributes')
+            ->where('insurance_product_id', $id)
+            ->where('category_attr_type', 'auxiliary_engine')
+            ->orderBy('attribute_id')
+            ->get();
+
+        $addMachinery = DB::table('vessel_attributes')
+            ->where('insurance_product_id', $id)
+            ->where('category_attr_type', 'additional_machinery_spaces')
+            ->orderBy('attribute_id')
+            ->get();
+
+        $picList = DB::table('vessel_pic')
+            ->where('insurance_product_id', $id)
+            ->orderBy('id_pic')
+            ->get();
+
+        if ($picList->isEmpty()) {
+            foreach (['Master', 'Chief Officer', 'Chief Engineer', 'DPA'] as $pos) {
+                DB::table('vessel_pic')->insert([
+                    'insurance_product_id' => $id,
+                    'position' => $pos,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+            $picList = DB::table('vessel_pic')->where('insurance_product_id', $id)->orderBy('id_pic')->get();
+        }
 
         return view('legacy-admin.insurance.attributes-set', [
             'title' => 'Set Vessel Attributes',
             'product' => $product,
             'riskTreatments' => self::RISK_TREATMENTS,
+            'baseParticulars' => $baseParticulars,
+            'customParticulars' => $customParticulars,
+            'mainEngine' => $mainEngine,
+            'auxEngine' => $auxEngine,
+            'addMachinery' => $addMachinery,
+            'picList' => $picList,
         ]);
     }
 
-    /**
-     * Survey Items View (1:1 with /surveys/items/index/{id})
-     */
-    public function surveyItems($id)
+    public function saveAttribute(Request $request)
+    {
+        $insuranceProductId = $request->input('insurance_product_id');
+        $attributeId = $request->input('attribute_id');
+        $label = $request->input('label');
+        $categoryAttr = $request->input('category_attr', 'General Particulars');
+        $categoryAttrType = $request->input('category_attr_type', 'vessel_particulars');
+
+        if ($attributeId) {
+            DB::table('vessel_attributes')
+                ->where('attribute_id', $attributeId)
+                ->update([
+                    'label' => $label,
+                    'updated_at' => now(),
+                ]);
+            $msg = 'Attribute updated successfully';
+        } else {
+            DB::table('vessel_attributes')->insert([
+                'insurance_product_id' => $insuranceProductId,
+                'category_attr_type' => $categoryAttrType,
+                'category_attr' => $categoryAttr,
+                'label' => $label,
+                'type' => 'text',
+                'option_id' => 0,
+                'parent' => 0,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $msg = 'Attribute added successfully';
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['status' => true, 'message' => $msg]);
+        }
+
+        return redirect()->back()->with('msg', '<div class="alert alert-success">' . $msg . '</div>');
+    }
+
+    public function deleteAttribute(Request $request, $attributeId)
+    {
+        DB::table('vessel_attributes')->where('attribute_id', $attributeId)->delete();
+
+        if ($request->ajax()) {
+            return response()->json(['status' => true, 'message' => 'Attribute deleted']);
+        }
+
+        return redirect()->back()->with('msg', '<div class="alert alert-success">Attribute deleted successfully</div>');
+    }
+
+    public function savePic(Request $request)
+    {
+        $insuranceProductId = $request->input('insurance_product_id');
+        $idPic = $request->input('id_pic');
+        $position = $request->input('position');
+
+        if ($idPic) {
+            DB::table('vessel_pic')->where('id_pic', $idPic)->update([
+                'position' => $position,
+                'updated_at' => now(),
+            ]);
+            $msg = 'Position updated successfully';
+        } else {
+            DB::table('vessel_pic')->insert([
+                'insurance_product_id' => $insuranceProductId,
+                'position' => $position,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ]);
+            $msg = 'Position added successfully';
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['status' => true, 'message' => $msg]);
+        }
+
+        return redirect()->back()->with('msg', '<div class="alert alert-success">' . $msg . '</div>');
+    }
+
+    public function deletePic(Request $request, $idPic)
+    {
+        DB::table('vessel_pic')->where('id_pic', $idPic)->delete();
+
+        if ($request->ajax()) {
+            return response()->json(['status' => true, 'message' => 'Position deleted']);
+        }
+
+        return redirect()->back()->with('msg', '<div class="alert alert-success">Position deleted successfully</div>');
+    }
+
+    /* =========================================================================
+     * SURVEY ITEMS (1:1 with legacy /surveys/items/index/{id})
+     * ========================================================================= */
+
+    public function surveyItems(Request $request, $id)
     {
         $product = InsuranceProduct::with('insuranceCompany')->findOrFail($id);
-        $items = DB::table('survey_items')->where('insurance_product_id', $id)->orderBy('id')->get();
+
+        $items = DB::table('survey_items')
+            ->where('insurance_product_id', $id)
+            ->orderBy('item_id', 'asc')
+            ->get();
 
         return view('legacy-admin.insurance.survey-items', [
-            'title' => 'Survey Items Checklist',
+            'title' => 'Survey Items List',
             'product' => $product,
             'items' => $items,
+            'riskValueExpected' => self::RISK_VALUES,
+            'riskTreatments' => self::RISK_TREATMENTS,
         ]);
+    }
+
+    public function saveSurveyItem(Request $request)
+    {
+        $itemId = $request->input('item_id');
+        $insuranceProductId = $request->input('insurance_product_id');
+        $refNo = $request->input('ref_no');
+        $category = $request->input('category');
+        $itemName = $request->input('item_name');
+        $riskValueExpected = $request->input('risk_value_expected');
+
+        $data = [
+            'insurance_product_id' => $insuranceProductId,
+            'ref_no' => $refNo,
+            'category' => $category,
+            'item_name' => $itemName,
+            'risk_value' => is_numeric($riskValueExpected) ? $riskValueExpected : 1,
+            'risk_value_expected' => self::RISK_VALUES[$riskValueExpected] ?? 'Low',
+            'updated_at' => now(),
+        ];
+
+        if ($itemId) {
+            DB::table('survey_items')->where('item_id', $itemId)->update($data);
+            $msg = 'Survey item updated successfully';
+        } else {
+            $data['created_at'] = now();
+            DB::table('survey_items')->insert($data);
+            $msg = 'Survey item added successfully';
+        }
+
+        return redirect('/surveys/items/index/' . $insuranceProductId)
+            ->with('msg', '<div class="alert alert-success">' . $msg . '</div>');
+    }
+
+    public function getSurveyItem($itemId)
+    {
+        $item = DB::table('survey_items')->where('item_id', $itemId)->first();
+
+        return response()->json($item);
+    }
+
+    public function deleteSurveyItem($itemId)
+    {
+        $item = DB::table('survey_items')->where('item_id', $itemId)->first();
+        $insuranceProductId = $item ? $item->insurance_product_id : 1;
+
+        DB::table('survey_items')->where('item_id', $itemId)->delete();
+
+        return redirect('/surveys/items/index/' . $insuranceProductId)
+            ->with('msg', '<div class="alert alert-success">Survey item deleted successfully</div>');
     }
 }

@@ -194,6 +194,15 @@ Route::get('/insurance/product/delete/{product}', [LegacyInsuranceController::cl
 Route::get('/insurance/attributes/set/{product}', [LegacyInsuranceController::class, 'setAttributes'])
     ->name('insurance.attributes.set');
 Route::get('/admin/insurance/attributes/{product}', [LegacyInsuranceController::class, 'setAttributes']);
+Route::post('/insurance/attributes/save', [LegacyInsuranceController::class, 'saveAttribute']);
+Route::get('/insurance/attributes/delete/{attribute}', [LegacyInsuranceController::class, 'deleteAttribute']);
+Route::post('/insurance/attributes/pic/save', [LegacyInsuranceController::class, 'savePic']);
+Route::get('/insurance/attributes/pic/delete/{pic}', [LegacyInsuranceController::class, 'deletePic']);
+
 Route::get('/surveys/items/index/{product}', [LegacyInsuranceController::class, 'surveyItems'])
     ->name('surveys.items.index');
 Route::get('/admin/surveys/items/{product}', [LegacyInsuranceController::class, 'surveyItems']);
+Route::post('/surveys/items/proses', [LegacyInsuranceController::class, 'saveSurveyItem']);
+Route::get('/surveys/items/get_items/{item}', [LegacyInsuranceController::class, 'getSurveyItem']);
+Route::get('/surveys/items/delete/{item}', [LegacyInsuranceController::class, 'deleteSurveyItem']);
+Route::get('/surveys/items/delete_items/{item}', [LegacyInsuranceController::class, 'deleteSurveyItem']);
