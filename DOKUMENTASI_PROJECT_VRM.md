@@ -1,6 +1,6 @@
 # LAPORAN DOKUMENTASI TEKNIS & FUNGSIONAL PROYEK
 # MODERNISASI SISTEM VESSEL RISK MANAGEMENT (VRM)
-### PT MITRA ISWARA & RORIMPANDEY (PT MIB)
+### MARINE INSURANCE BROKER (MIB)
 
 ---
 
@@ -28,7 +28,7 @@
 ## BAB 1: EXECUTIVE SUMMARY & LATAR BELAKANG PROYEK
 
 ### 1.1 Latar Belakang
-Sistem **Vessel Risk Management (VRM)** merupakan platform inti (*mission-critical application*) yang dioperasikan oleh **PT Mitra Iswara & Rorimpandey (PT MIB)** untuk mengelola penilaian risiko armada kapal (*vessel risk assessment*), manajemen penugasan survei kelautan (*marine survey inspection*), manajemen mitigasi polis asuransi perkapalan, serta penanganan kasus klaim (*claim solutions*).
+Sistem **Vessel Risk Management (VRM)** merupakan platform inti (*mission-critical application*) yang dioperasikan oleh **Marine Insurance Broker (MIB)** untuk mengelola penilaian risiko armada kapal (*vessel risk assessment*), manajemen penugasan survei kelautan (*marine survey inspection*), manajemen mitigasi polis asuransi perkapalan, serta penanganan kasus klaim (*claim solutions*).
 
 Sistem terdahulu (*legacy*) dibangun di atas framework **CodeIgniter 3 HMVC** dengan basis data **MySQL 5.7**. Seiring bertambahnya volume data dan kebutuhan pelaporan eksekutif yang dinamis, sistem lama menghadapi beberapa keterbatasan:
 1. Arsitektur monolitis lama tanpa standarisasi *Foreign Key Constraint* formal di level database.
@@ -406,4 +406,4 @@ PGPASSWORD="VrmSecure2026Db" pg_dump -U vrm_user -h 127.0.0.1 -d vrm_modern \
 
 | Disusun Oleh, | Ditinjau & Disetujui Oleh, |
 | :---: | :---: |
-| <br><br><br>___________________________<br>**Tim Pengembang Modernisasi VRM** | <br><br><br>___________________________<br>**Management PT MIB** |
+| <br><br><br>___________________________<br>**Tim Pengembang Modernisasi VRM** | <br><br><br>___________________________<br>**Manajemen Marine Insurance Broker (MIB)** |
