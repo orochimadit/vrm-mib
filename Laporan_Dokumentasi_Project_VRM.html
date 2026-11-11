@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Laporan Dokumentasi Proyek VRM - PT MIB</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 18mm 14mm 18mm 14mm;
+            @bottom-right {
+                content: counter(page);
+            }
+        }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #334155;
+            line-height: 1.45;
+            font-size: 9.5pt;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .cover {
+            text-align: center;
+            padding-top: 40px;
+            page-break-after: always;
+        }
+        .cover-org {
+            color: #134074;
+            font-size: 13pt;
+            font-weight: bold;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        .cover-title {
+            color: #0b2545;
+            font-size: 20pt;
+            font-weight: 800;
+            line-height: 1.25;
+            margin-bottom: 12px;
+        }
+        .cover-sub {
+            color: #64748b;
+            font-size: 10pt;
+            max-width: 85%;
+            margin: 0 auto 25px auto;
+        }
+        .meta-box {
+            width: 90%;
+            margin: 25px auto 0 auto;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 9pt;
+        }
+        .meta-box td {
+            padding: 7px 12px;
+            border: 1px solid #cbd5e1;
+        }
+        .meta-box td.label {
+            background-color: #f1f5f9;
+            font-weight: bold;
+            width: 32%;
+            color: #1e293b;
+        }
+        h1 {
+            color: #0b2545;
+            font-size: 14pt;
+            border-bottom: 2px solid #134074;
+            padding-bottom: 4px;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            page-break-after: avoid;
+        }
+        h2 {
+            color: #134074;
+            font-size: 11.5pt;
+            margin-top: 18px;
+            margin-bottom: 8px;
+            page-break-after: avoid;
+        }
+        p {
+            margin-top: 0;
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+        .callout {
+            background-color: #edf4fc;
+            border-left: 4px solid #134074;
+            padding: 8px 12px;
+            margin: 12px 0;
+            font-size: 9pt;
+            color: #1e293b;
+            border-radius: 0 4px 4px 0;
+        }
+        table.data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 8.5pt;
+            page-break-inside: avoid;
+        }
+        table.data-table th {
+            background-color: #134074;
+            color: #ffffff;
+            padding: 7px 9px;
+            border: 1px solid #0b2545;
+            text-align: left;
+            font-weight: 600;
+        }
+        table.data-table td {
+            padding: 5px 9px;
+            border: 1px solid #cbd5e1;
+            vertical-align: top;
+        }
+        table.data-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        .figure-container {
+            text-align: center;
+            margin: 14px 0;
+            page-break-inside: avoid;
+        }
+        .figure-container img {
+            max-width: 96%;
+            border: 1px solid #cbd5e1;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        }
+        .figure-container .caption {
+            font-size: 8pt;
+            color: #64748b;
+            font-style: italic;
+            margin-top: 4px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 6px;
+            font-size: 7.5pt;
+            font-weight: 600;
+            border-radius: 3px;
+            background: #e2e8f0;
+            color: #334155;
+        }
+        .badge-primary { background: #dbeafe; color: #1e40af; }
+        .page-break {
+            page-break-after: always;
+        }
+        .sig-container {
+            width: 100%;
+            margin-top: 35px;
+            border-collapse: collapse;
+            page-break-inside: avoid;
+        }
+        .sig-container td {
+            width: 50%;
+            text-align: center;
+            vertical-align: top;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+    <div class="cover-org">PT MITRA ISWARA & RORIMPANDEY (PT MIB)</div>
+    <div class="cover-title">LAPORAN DOKUMENTASI TEKNIS & FUNGSIONAL<br>MODERNISASI SISTEM VESSEL RISK MANAGEMENT (VRM)</div>
+    <div class="cover-sub">Transisi Menyeluruh dari CodeIgniter 3 MySQL ke Laravel 11 PostgreSQL 14 dengan Paritas Tampilan 1:1, Analitik Eksekutif, dan Integritas Relasi Data Penuh</div>
+
+    <div class="figure-container" style="margin: 15px 0;">
+        <img src="ss/admin/dashboard_total_policy_by_years.png" style="max-height: 260px;" alt="Hero Preview">
+        <div class="caption">Gambar Cover: Tampilan Antarmuka Baru Dashboard VRM PT MIB</div>
+    </div>
+
+    <table class="meta-box">
+        <tr>
+            <td class="label">Status Dokumen</td>
+            <td><strong>Final Production Ready / Deployed Live</strong></td>
+        </tr>
+        <tr>
+            <td class="label">Tanggal Rilis</td>
+            <td>11 November 2026</td>
+        </tr>
+        <tr>
+            <td class="label">Versi Sistem</td>
+            <td>2.0 (Modern Architecture)</td>
+        </tr>
+        <tr>
+            <td class="label">URL Lingkungan</td>
+            <td>http://dev-vrm.dudukdulu.com/ (Server: 149.129.235.91:3031)</td>
+        </tr>
+        <tr>
+            <td class="label">Repository</td>
+            <td>github.com/orochimadit/vrm-mib (Branch: main)</td>
+        </tr>
+    </table>
+</div>
+
+<!-- BAB 1 -->
+<h1>BAB 1: EXECUTIVE SUMMARY & LATAR BELAKANG PROYEK</h1>
+<p><strong>1.1 Gambaran Umum:</strong> Sistem Vessel Risk Management (VRM) merupakan platform inti milik PT Mitra Iswara & Rorimpandey (PT MIB) yang didesain khusus untuk mengelola penilaian risiko armada kapal, inspeksi survei kelautan, manajemen polis mitigasi asuransi, dan resolusi kasus klaim perkapalan.</p>
+<p><strong>1.2 Alasan Modernisasi:</strong> Sistem sebelumnya berjalan pada CodeIgniter 3 HMVC dan MySQL 5.7. Modernisasi ke Laravel 11 dan PostgreSQL 14 berhasil dieksekusi dengan prinsip <em>Zero Disruption</em> (tampilan dan alur 1:1 persis) dan <em>Zero Data Loss</em> (seluruh 987 polis, 699 kapal, dan 1.433 item survei terpelihara utuh).</p>
+
+<h2>1.3 Rekapitulasi Data Riil yang Berhasil Dimigrasikan</h2>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th style="width: 32%;">Indikator Utama</th>
+            <th style="width: 25%;">Jumlah Riil di Database</th>
+            <th>Keterangan Operasional</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td>Total Polis & Penugasan Survei</td><td><strong>987 Penugasan</strong></td><td>Tersebar aktif dari tahun 2023 s.d. 2027</td></tr>
+        <tr><td>Total Armada Kapal Terdaftar</td><td><strong>699 Kapal</strong></td><td>Lengkap dengan data GRT, Tahun Buat, & Tipe Kapal</td></tr>
+        <tr><td>Total Tonase Kotor Armada (GRT)</td><td><strong>1.203.539 GRT</strong></td><td>Akumulasi kapasitas tonase kapal dalam pengawasan</td></tr>
+        <tr><td>Total Nilai Pertanggungan (TSI)</td><td><strong>$91.95 Miliar USD</strong></td><td>Total nilai aset kapal yang dimitigasi risikonya</td></tr>
+        <tr><td>Checklist Item Survei Kelautan</td><td><strong>1.433 Item</strong></td><td>Daftar butir inspeksi lengkap dengan bobot risiko</td></tr>
+        <tr><td>Atribut Teknis & Spesifikasi Kapal</td><td><strong>1.296 Atribut</strong></td><td>Meliputi General, Main Engine, Aux Engine, & PIC</td></tr>
+        <tr><td>Kasus Solusi Klaim (Claim Solution)</td><td><strong>22 Kasus</strong></td><td>Terbagi atas status Ongoing, Accepted, dan Rejected</td></tr>
+        <tr><td>Akun Pengguna Terdaftar</td><td><strong>253 Akun</strong></td><td>Tersebar ke 5 level hak akses (RBAC)</td></tr>
+    </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- BAB 2 & 3 -->
+<h1>BAB 2: ARSITEKTUR SISTEM & SPESIFIKASI TEKNOLOGI</h1>
+<p>Sistem mengimplementasikan Dual-Engine Architecture: antarmuka operasional 1:1 Jeramin Theme untuk operasional harian dan Filament v3 Core untuk tata kelola master data.</p>
+<table class="data-table">
+    <thead><tr><th style="width: 25%;">Komponen</th><th>Spesifikasi Teknologi Modern</th></tr></thead>
+    <tbody>
+        <tr><td><strong>Backend Engine</strong></td><td>Laravel 11 dengan PHP 8.4-FPM (Strict Typing & High Concurrency)</td></tr>
+        <tr><td><strong>Database Server</strong></td><td>PostgreSQL 14 Server (ACID compliant, JSONB indexing)</td></tr>
+        <tr><td><strong>Frontend Operasional</strong></td><td>Blade Templating, Bootstrap 4, Highcharts.js, DataTables (1:1 Jeramin Theme)</td></tr>
+        <tr><td><strong>Frontend Core Admin</strong></td><td>Filament v3, Tailwind CSS, Alpine.js, Livewire 3</td></tr>
+        <tr><td><strong>Web Server & Gateway</strong></td><td>Nginx 1.18 Reverse Proxy dengan HTTP/2 & Enkripsi SSL/TLS</td></tr>
+        <tr><td><strong>Infrastruktur Hosting</strong></td><td>Ubuntu 22.04 LTS VPS (Host: 149.129.235.91:3031) | Domain: http://dev-vrm.dudukdulu.com/</td></tr>
+    </tbody>
+</table>
+
+<h1>BAB 3: KOMPARASI ARSITEKTUR DATABASE & INTEGRITAS DATA</h1>
+<table class="data-table">
+    <thead>
+        <tr>
+            <th style="width: 20%;">Aspek Arsitektur</th>
+            <th style="width: 25%;">Database Lama (MySQL)</th>
+            <th style="width: 25%;">Database Baru (PostgreSQL)</th>
+            <th>Nilai Tambah & Manfaat</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>DBMS Engine</strong></td><td>MySQL 5.7 / MyISAM-InnoDB</td><td>PostgreSQL 14 Enterprise</td><td>Penuh kepatuhan ACID, performa analitik jauh lebih cepat</td></tr>
+        <tr><td><strong>Integritas Relasi</strong></td><td>Virtual relation di PHP</td><td>Strict Foreign Keys (CASCADE/SET NULL)</td><td>Mencegah orphan data saat entitas induk dihapus</td></tr>
+        <tr><td><strong>Manajemen Akun</strong></td><td>Tabel admin & admin_level terpisah</td><td>Tabel tunggal terpadu users (RBAC)</td><td>Tata kelola sentral, fleksibilitas login Username atau Email</td></tr>
+        <tr><td><strong>Keamanan Password</strong></td><td>MD5 / Plain Hash historis</td><td>Bcrypt Hashing (Cost 12)</td><td>Sesuai standar audit keamanan industri perbankan & asuransi</td></tr>
+        <tr><td><strong>Version Control</strong></td><td>Dump SQL manual tanpa riwayat</td><td>Laravel Database Migrations</td><td>Seluruh skema tercatat di Git dan dapat direproduksi instan</td></tr>
+        <tr><td><strong>Audit Timestamps</strong></td><td>Sebagian tabel tanpa waktu</td><td>created_at & updated_at di semua tabel</td><td>Pelacakan riwayat perubahan data akurat untuk kebutuhan audit</td></tr>
+        <tr><td><strong>Atribut Kapal</strong></td><td>Tabel lokal tanpa FK standar</td><td>Ternormalisasi (vessel_attributes & vessel_pic)</td><td>Konfigurasi spesifikasi kapal menjadi dinamis per produk</td></tr>
+    </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<!-- BAB 4: MODUL FUNGSIONAL DENGAN SCREENSHOT -->
+<h1>BAB 4: DOKUMENTASI MODUL FUNGSIONAL & TAMPILAN VISUAL SISTEM</h1>
+
+<h2>4.1 Modul Dashboard Analitik Eksekutif (/admin/dashboard)</h2>
+<p>Menghadirkan grafik 1:1 'Total Policy by Years' menggunakan Highcharts bertema kanvas gelap (#181818) dengan bar biru elektrik (#00b4d8) yang interaktif, 6 kartu KPI eksekutif, serta visualisasi pangsa pasar asuransi dan portofolio risiko.</p>
+
+        <div class="figure-container">
+            <img src="ss/admin/dashboard_total_policy_by_years.png" style="max-height: 380px;" alt="Gambar 4.1: Dashboard Analitik Eksekutif dengan Grafik Total Policy by Years & 6 KPI Cards">
+            <div class="caption">Gambar 4.1: Dashboard Analitik Eksekutif dengan Grafik Total Policy by Years & 6 KPI Cards</div>
+        </div>
+        
+
+<h2>4.2 Modul Services & Vessel Risk Management (/admin/surveys)</h2>
+<p>Menyediakan hub layanan, kartu perusahaan asuransi, modal popup pemilihan tahun penugasan (2023 s.d. 2027), tabel penugasan survei, dan formulir Add New Assignment 5 kontainer terstruktur.</p>
+
+        <div class="figure-container">
+            <img src="ss/admin/services_hub_two_buttons.png" style="max-height: 220px;" alt="Gambar 4.2: Hub Pemilihan Layanan (Vessel Risk Management & Claim Solution)">
+            <div class="caption">Gambar 4.2: Hub Pemilihan Layanan (Vessel Risk Management & Claim Solution)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/vrm_surveys_hub_companies_and_year_modal.png" style="max-height: 260px;" alt="Gambar 4.3: Kartu Perusahaan Asuransi & Modal Filter Pemilihan Tahun Penugasan">
+            <div class="caption">Gambar 4.3: Kartu Perusahaan Asuransi & Modal Filter Pemilihan Tahun Penugasan</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+
+        <div class="figure-container">
+            <img src="ss/admin/vrm_surveys_data_2027_table_view.jpg" style="max-height: 380px;" alt="Gambar 4.4: Tabel Data Penugasan Survei Tahun 2027 dengan Status Badge">
+            <div class="caption">Gambar 4.4: Tabel Data Penugasan Survei Tahun 2027 dengan Status Badge</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/vrm_actions_buttons_1.jpg" style="max-height: 380px;" alt="Gambar 4.5: Rangkaian 5 Tombol Aksi Survei (Condition, Survey, Result, Deficiency, Edit)">
+            <div class="caption">Gambar 4.5: Rangkaian 5 Tombol Aksi Survei (Condition, Survey, Result, Deficiency, Edit)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/vrm_surveys_add_new_assignment.png" style="max-height: 380px;" alt="Gambar 4.6: Formulir Penugasan Survei Baru (Add New Assignment) 5 Kontainer">
+            <div class="caption">Gambar 4.6: Formulir Penugasan Survei Baru (Add New Assignment) 5 Kontainer</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+<h2>4.3 Modul Claim Solution Hub (/admin/claims)</h2>
+<p>Mengelola 3 pilar penanganan klaim (Consultant, Portofolio, All Portofolio), detail kronologis insiden kapal, dan laporan Summary Claim Case resmi format satu halaman.</p>
+
+        <div class="figure-container">
+            <img src="ss/admin/claims_solution_hub_cards.png" style="max-height: 220px;" alt="Gambar 4.7: Halaman Hub 3 Pilar Solusi Klaim (Consultant, Portofolio, All Portofolio)">
+            <div class="caption">Gambar 4.7: Halaman Hub 3 Pilar Solusi Klaim (Consultant, Portofolio, All Portofolio)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/claims_detail_noah_satu.png" style="max-height: 380px;" alt="Gambar 4.8: Detail Kronologis Penanganan Kasus Klaim Kapal NOAH SATU">
+            <div class="caption">Gambar 4.8: Detail Kronologis Penanganan Kasus Klaim Kapal NOAH SATU</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/claims_summary_noah_satu.jpg" style="max-height: 380px;" alt="Gambar 4.9: Format Ringkasan Resmi Summary Claim Case Kapal NOAH SATU">
+            <div class="caption">Gambar 4.9: Format Ringkasan Resmi Summary Claim Case Kapal NOAH SATU</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+<h2>4.4 Modul Vessel & Owner Company Management (/admin/companies)</h2>
+<p>Manajemen data perusahaan pemilik kapal dan armada kapal terdaftar, lengkap dengan formulir pendaftaran perusahaan dan registrasi kapal baru.</p>
+
+        <div class="figure-container">
+            <img src="ss/admin/vessel_company_data_table.png" style="max-height: 380px;" alt="Gambar 4.10: Master Data Perusahaan Pemilik Kapal (Vessel Company Data)">
+            <div class="caption">Gambar 4.10: Master Data Perusahaan Pemilik Kapal (Vessel Company Data)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/vessel_data_by_company.png" style="max-height: 380px;" alt="Gambar 4.11: Daftar Armada Kapal per Perusahaan (PT Mitra Abadi Wisesa)">
+            <div class="caption">Gambar 4.11: Daftar Armada Kapal per Perusahaan (PT Mitra Abadi Wisesa)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/vessel_management_form_add.png" style="max-height: 380px;" alt="Gambar 4.12: Formulir Penambahan Data Kapal Baru (Vessel Management Form)">
+            <div class="caption">Gambar 4.12: Formulir Penambahan Data Kapal Baru (Vessel Management Form)</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+<h2>4.5 Modul Insurance & Product Configuration (/admin/insurance-products)</h2>
+<p>Manajemen perusahaan asuransi mitra, hub kartu biru produk asuransi 3 kolom, konfigurasi Set Vessel Attributes, dan tabel checklist 1.433 item survei kelautan.</p>
+
+        <div class="figure-container">
+            <img src="ss/admin/insurance_company_list.png" style="max-height: 380px;" alt="Gambar 4.13: Master Data Perusahaan Asuransi Mitra (Insurance Company List)">
+            <div class="caption">Gambar 4.13: Master Data Perusahaan Asuransi Mitra (Insurance Company List)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/insurance_product_company_cards.png" style="max-height: 380px;" alt="Gambar 4.14: Hub Kartu Biru Produk Asuransi per Perusahaan (Product Insurance Hub)">
+            <div class="caption">Gambar 4.14: Hub Kartu Biru Produk Asuransi per Perusahaan (Product Insurance Hub)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/insurance_product_management_table.jpg" style="max-height: 380px;" alt="Gambar 4.15: Tabel Manajemen Produk Asuransi per Underwriter">
+            <div class="caption">Gambar 4.15: Tabel Manajemen Produk Asuransi per Underwriter</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+
+        <div class="figure-container">
+            <img src="ss/admin/product_set_vessel_attributes.png" style="max-height: 450px;" alt="Gambar 4.16: Halaman Konfigurasi Set Vessel Attributes (General, Machinery, Engine, PIC)">
+            <div class="caption">Gambar 4.16: Halaman Konfigurasi Set Vessel Attributes (General, Machinery, Engine, PIC)</div>
+        </div>
+        
+
+        <div class="figure-container">
+            <img src="ss/admin/product_survey_items_list.jpg" style="max-height: 450px;" alt="Gambar 4.17: Tabel Checklist 1.433 Item Survei Kelautan Beserta Bobot Risiko">
+            <div class="caption">Gambar 4.17: Tabel Checklist 1.433 Item Survei Kelautan Beserta Bobot Risiko</div>
+        </div>
+        
+
+<div class="page-break"></div>
+
+<!-- BAB 5 & 6 -->
+<h1>BAB 5: MANAJEMEN PENGGUNA & HAK AKSES MULTI-ROLE (RBAC)</h1>
+<p>Sistem menerapkan Role-Based Access Control (RBAC) pada tabel users dengan enkripsi Bcrypt. Form login (/admin/login dan /login) mendukung fleksibilitas Dual-Login (Username / Email).</p>
+
+<table class="data-table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Role Sistem</th>
+            <th>Deskripsi Peran & Hak Akses Utama</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>deddyfebriyadi</strong></td><td>deddyfebriyadi</td><td><span class="badge badge-primary">admin_mcm</span></td><td>Superadmin: Akses penuh ke seluruh modul, master data, konfigurasi produk, dan persetujuan</td></tr>
+        <tr><td><strong>contoh</strong></td><td>contoh</td><td><span class="badge">shipowner</span></td><td>Ship Owner: Memantau kondisi armada kapal miliknya, sertifikat survei, dan status klaim kapal</td></tr>
+        <tr><td><strong>abadi123</strong></td><td>abadi123</td><td><span class="badge">surveyor</span></td><td>Surveyor: Mengisi lembar penilaian fisik (condition), checklist temuan, dan unggah laporan inspeksi</td></tr>
+        <tr><td><strong>ramayana123</strong></td><td>ramayana123</td><td><span class="badge">insurance</span></td><td>Insurance/Partner: Memantau polis pertanggungan, menetapkan treatment risiko, dan mengawasi klaim</td></tr>
+    </tbody>
+</table>
+
+<h1>BAB 6: PANDUAN DEPLOYMENT & LEMBAR PENGESAHAN</h1>
+<p><strong>6.1 Prosedur Deployment:</strong> Deployment ke server produksi 149.129.235.91:3031 dilakukan secara otomatis melalui Git: (1) <code>git pull origin main</code>, (2) <code>php artisan migrate --force</code>, (3) <code>php artisan optimize:clear && php artisan route:clear && php artisan view:clear</code>.</p>
+<p><strong>6.2 Pencadangan Data Harian:</strong> Pencadangan harian basis data PostgreSQL dianjurkan menggunakan perintah pg_dump: <code>PGPASSWORD='VrmSecure2026Db' pg_dump -U vrm_user -h 127.0.0.1 -d vrm_modern --format=custom --file='/var/backups/vrm_modern_$(date +%Y%m%d_%H%M%S).dump'</code>.</p>
+
+<table class="sig-container">
+    <tr>
+        <td><strong>Disusun & Diverifikasi Oleh:</strong></td>
+        <td><strong>Disetujui & Diterima Oleh:</strong></td>
+    </tr>
+    <tr>
+        <td style="height: 60px;"></td>
+        <td style="height: 60px;"></td>
+    </tr>
+    <tr>
+        <td>___________________________<br><strong>Tim Pengembang Modernisasi VRM</strong></td>
+        <td>___________________________<br><strong>Manajemen PT MIB</strong></td>
+    </tr>
+</table>
+
+</body>
+</html>
